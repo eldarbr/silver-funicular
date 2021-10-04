@@ -1,10 +1,22 @@
-﻿#include <iostream>
+﻿/*******************************************\
+*											*
+*											*
+*											*
+*											*
+*											*
+*											*
+\*******************************************/
+
+
+#include <iostream>
 #include <iomanip>
 using namespace std;
+
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
+
 	//Входной контроль
 	long double Eps;
 	cout << "Введите Eps: ";
@@ -13,22 +25,31 @@ int main()
 		cout << "ОШИБКА! Eps должен быть больше 0!";
 		return 0;
 	}
+
 	//Инициализация переменных
 	double Sum = 0;
-	unsigned long N = 1;
+	unsigned long long N = 1;
+	bool interrupted = false;
+
 	//Рассчет суммы
 	do {
-		// cout << Sum << " " << N << "\n";
-		Sum += (long double)(1.0 / (unsigned long)((N * (unsigned long)(N + 1))));
+		unsigned long long nextmult = (N + 1) * (N + 2);		//
+		unsigned long long mult = N * (N + 1);					//
+		if (mult > nextmult) {									//	ПРОВЕРКА НА ПРЕВЫШЕНИЕ ГРАНИЦЫ ВОЗМОЖНОСТИ ПОДСЧЕТА
+			interrupted = !interrupted;							//
+			break;												//
+		}														//
+		Sum += 1.0 / mult;
 		N++;
-		if (Sum > 1) {
-			cout.precision(10005);
-			cout << "warn sum > 1! " << Sum << " " << N << "\n";
-		}
 	} while ((1 - Sum) > Eps);
+
 	//Вывод результатов
+	cout.precision(35);
+	if (interrupted) {
+		cout << fixed << "Достигнуто ограничение по точности подсчета\nРазность достигнутой точности и Eps = " << 1 - Sum - Eps << "\n";
+	}
 	cout << "Количество просумированных элементов N = " << N << endl;
 	cout << "Сумма Sum = " << Sum << endl;
-	cout << "Разность суммы и точного значения (1 - Sum) = " << (1 - Sum) << endl;
+	cout << fixed << "Разность суммы и точного значения (1 - Sum) = " << (1 - Sum) << endl;
 	return 1;
 }
