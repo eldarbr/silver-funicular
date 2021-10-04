@@ -1,6 +1,26 @@
 ﻿#include <iostream>
-
+using namespace std;
 int main()
 {
-    std::cout << "Hello World!\n";
+    setlocale(LC_ALL, "Russian");
+    //Входной контроль
+    float Eps;
+    cout << "Введите Eps: ";
+    cin >> Eps;
+    if (Eps <= 0) {
+        cout << "ОШИБКА! Eps должен быть больше 0!";
+        exit;
+    }
+    //Инициализация переменных
+    double Sum = 0;
+    int N = 1;
+    //Рассчет суммы
+    Sum += 1 / (N * (++N));
+    while ((1 - Sum) < Eps) {
+        Sum += 1 / (N * (++N));
+    }
+    cout << "Количество просумированных элементов N = " << N << endl;
+    cout << "Сумма Sum = " << Sum << endl;
+    cout << "Разность суммы и точного значения (1 - Sum) = " << (1 - Sum) << endl;
+    return 0;
 }
