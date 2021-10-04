@@ -9,7 +9,7 @@ int main()
 	cin >> Eps;
 	if (Eps <= 0) {
 		cout << "ОШИБКА! Eps должен быть больше 0!";
-		return 1;
+		return 0;
 	}
 	//Инициализация переменных
 	double Sum = 0;
