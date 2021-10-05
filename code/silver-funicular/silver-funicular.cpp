@@ -29,27 +29,30 @@ int main()
 	//Инициализация переменных
 	double Sum = 0;
 	unsigned long long N = 1;
+	double prevDelta = 1;
 	bool interrupted = false;
 
 	//Рассчет суммы
 	do {
-		unsigned long long nextmult = (N + 1) * (N + 2);		//
-		unsigned long long mult = N * (N + 1);					//
-		if (mult > nextmult) {									//	ПРОВЕРКА НА ПРЕВЫШЕНИЕ ГРАНИЦЫ ВОЗМОЖНОСТИ ПОДСЧЕТА
-			interrupted = !interrupted;							//
-			break;												//
-		}														//
-		Sum += 1.0 / mult;
+		Sum += 1.0 / N / (N + 1);
 		N++;
+		if (N % 1000 == 0) {					// проверка каждые 1000 проходов для оптимизации
+			if (prevDelta + Sum - 1 == 0) {
+				interrupted = true;
+				break;
+			}
+			prevDelta = 1 - Sum;
+		}
 	} while ((1 - Sum) > Eps);
 
 	//Вывод результатов
-	cout.precision(35);
+	cout.precision(60);
 	if (interrupted) {
 		cout << fixed << "Достигнуто ограничение по точности подсчета\nРазность достигнутой точности и Eps = " << 1 - Sum - Eps << "\n";
 	}
 	cout << "Количество просумированных элементов N = " << N << endl;
 	cout << "Сумма Sum = " << Sum << endl;
 	cout << fixed << "Разность суммы и точного значения (1 - Sum) = " << (1 - Sum) << endl;
+
 	return 1;
 }
