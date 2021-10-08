@@ -36,19 +36,17 @@ int main()
 	do {
 		Sum += 1.0 / N / (N + 1);
 		N++;
-		if (N % 1000 == 0) {					// проверка каждые 1000 проходов для оптимизации
-			if (prevDelta + Sum - 1 == 0) {
-				interrupted = true;
-				break;
-			}
-			prevDelta = 1 - Sum;
+		if (prevDelta + Sum - 1 == 0) { // проверка каждые 1000 проходов для оптимизации
+			interrupted = true;
+			break;
 		}
+		prevDelta = 1 - Sum;
 	} while ((1 - Sum) > Eps);
 
 	//Вывод результатов
 	cout.precision(60);
 	if (interrupted) {
-		cout << fixed << "Достигнуто ограничение по точности подсчета\nРазность достигнутой точности и Eps = " << 1 - Sum - Eps << "\n";
+		cout << fixed << "Достигнуто ограничение по точности подсчета\nРазность достигнутой точности и Eps = " << 1 - Sum - Eps << endl;
 	}
 	cout << "Количество просумированных элементов N = " << N << endl;
 	cout << "Сумма Sum = " << Sum << endl;
