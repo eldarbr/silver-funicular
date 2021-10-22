@@ -1,14 +1,4 @@
-﻿/*******************************************\
-*											*
-*											*
-*											*
-*											*
-*											*
-*											*
-\*******************************************/
-
-
-#include <iostream>
+﻿#include <iostream>
 #include <iomanip>
 using namespace std;
 
@@ -17,7 +7,7 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 
-	//Входной контроль
+	// Входной контроль
 	long double Eps;
 	cout << "Введите Eps: ";
 	cin >> Eps;
@@ -26,24 +16,24 @@ int main()
 		return 0;
 	}
 
-	//Инициализация переменных
+	// Инициализация переменных
 	double Sum = 0;
 	unsigned long long N = 1;
 	double prevDelta = 1;
 	bool interrupted = false;
 
-	//Рассчет суммы
+	// Рассчет суммы
 	do {
 		Sum += 1.0 / N / (N + 1);
 		N++;
-		if (prevDelta + Sum - 1 == 0) {
-			interrupted = true;
-			break;
-		}
-		prevDelta = 1 - Sum;
+		if (prevDelta + Sum - 1 == 0) { //
+			interrupted = true;			// Если точность не увеличилась за последнюю итерацию,
+			break;						// достигнут предел точности
+		}								//
+		prevDelta = 1 - Sum;			//
 	} while ((1 - Sum) > Eps);
 
-	//Вывод результатов
+	// Вывод результатов
 	cout.precision(60);
 	if (interrupted) {
 		cout << fixed << "Достигнуто ограничение по точности подсчета\nРазность достигнутой точности и Eps = " << 1 - Sum - Eps << endl;
