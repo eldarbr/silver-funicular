@@ -36,7 +36,7 @@ int main()
 	do {
 		Sum += 1.0 / N / (N + 1);
 		N++;
-		if (prevDelta + Sum - 1 == 0) { // проверка каждые 1000 проходов для оптимизации
+		if (prevDelta + Sum - 1 == 0) {
 			interrupted = true;
 			break;
 		}
