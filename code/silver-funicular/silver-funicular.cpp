@@ -7,32 +7,33 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 
+	// Инициализация переменных
+	long double Eps;				// заданная пользователем точность подсчета Эпсилон
+	double Sum = 0;					// сумма
+	unsigned long long N = 0;		// индекс суммы
+	double prevDelta = 1;			// моментальная точность предыдущей итерации
+	bool interrupted = false;		// флаг, указывающий на выход из цикла до достижения необходимой точности
+
 	// Входной контроль
-	long double Eps;
 	cout << "Введите Eps: ";
 	cin >> Eps;
 	cout << "\n";
 	if (Eps <= 0) {
-		cout << "ОШИБКА - Eps должен быть больше 0." << endl;;
+		// Предотвращение некорректного ввода точности подсчета
+		cout << "ОШИБКА - Eps должен быть больше 0." << endl;
 		return 0;
 	}
-
-	// Инициализация переменных
-	double Sum = 0;
-	unsigned long long N = 0;
-	double prevDelta = 1;
-	bool interrupted = false;
-
-	// Рассчет суммы
+	
+	// Расчет суммы
 	do {
-		N++;
-		Sum += 1.0 / N / (N + 1);
-		if (prevDelta + Sum - 1 == 0) { //
+		N++;							// инкремент индекса
+		Sum += 1.0 / N / (N + 1);		// подсчет нового слагаемого, прибавление его к сумме
+		if (prevDelta + Sum - 1 == 0) { 
 			interrupted = true;			// Если точность не увеличилась за последнюю итерацию,
-			break;						// достигнут предел точности
-		}								//
-		prevDelta = 1 - Sum;			//
-	} while ((1 - Sum) > Eps);
+			break;						// достигнут предел точности, необходимо завершить цикл
+		}								
+		prevDelta = 1 - Sum;			// сохранение новой моментальной точности
+	} while (prevDelta > Eps);
 
 	// Вывод результатов
 	cout.precision(60);
