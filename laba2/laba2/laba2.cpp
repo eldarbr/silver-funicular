@@ -12,10 +12,10 @@ void HeadTable() {
         << char(194) << setfill(char(196)) << setw(20)
         << char(191) << endl;
     cout << "\t"
-        << char(179) << setw(19) << "#" << setfill(' ')
-        << char(179) << setw(19) << "x" << setfill(' ')
-        << char(179) << setw(19) << "F(x)" << setfill(' ')
-        << char(179) << setw(19) << "G(x)" << setfill(' ')
+        << char(179)  << setfill(' ') << setw(19)<< "#"
+        << char(179)  << setfill(' ') << setw(19)<< "x"
+        << char(179)  << setfill(' ') << setw(19)<< "F(x)"
+        << char(179)  << setfill(' ') << setw(19)<< "G(x)"
         << char(179) << endl;
     cout << "\t"
         << char(195) << setfill(char(196)) << setw(20)
@@ -88,8 +88,9 @@ int main()
             << setfill(char(255)) << char(179) << endl;
         if (i!=N)
             BetweenTheRaws();
+        else
+            BottomTable();
     }
-    BottomTable();
     return 0;
 }
 
