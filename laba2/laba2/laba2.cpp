@@ -35,7 +35,7 @@ void BottomTable() {
         << char(217) << endl;
 }
 
-void  BetweenTheRaw() {
+void  BetweenTheRaws() {
     cout << "\t"
         << char(195) << setfill(char(196)) << setw(20)
         << char(197) << setfill(char(196)) << setw(20)
@@ -87,7 +87,7 @@ int main()
             << char(179) << setw(19) << setprecision(4) << G(x)
             << setfill(char(255)) << char(179) << endl;
         if (i!=N)
-            BetweenTheRaw();
+            BetweenTheRaws();
     }
     BottomTable();
     return 0;
