@@ -1,5 +1,20 @@
-﻿#include <iostream>
-#include <cmath>
+﻿/*******************************************************\
+*   C++ наш, сущий в памяти!                            *
+*   да компилируется код Твой;                          *
+*   да приидет царствие Софта Твоего;                   *
+*   да будут действительны указатели Твои               *
+*   и в ОЗУ, как на жестком диске;                      *
+*   массив наш насущный подавай нам на каждый день;     *
+*   и прости нам варнинги наши,                         *
+*   как и мы избавляемся от ошибок наших;               *
+*   и не введи нас в бесконечный цикл,                  *
+*   но избавь нас от винды.                             *
+*   Ибо Твое есть Царство и сила и слава во веки.       *
+*   Энтер.                                              *
+\*******************************************************/
+
+
+#include <iostream>
 #include <iomanip>
 
 using namespace std;
@@ -39,7 +54,7 @@ void BottomTable() {
 }
 
 // псевдографика - тело таблицы
-void  BetweenTheRaws() {
+void BetweenTheRaws() {
     cout << "\t"
         << char(195) << setfill(char(196)) << setw(20)
         << char(197) << setfill(char(196)) << setw(20)
@@ -48,14 +63,23 @@ void  BetweenTheRaws() {
         << char(180) << endl;
 }
 
+double power(double a, int n) {
+    double b = a;
+    for (int i = 1; i < n; i++) {
+        b *= a;
+    }
+    return b;
+}
+
+
 // расчет значения функции F(x) в точке x
 double F(double x) {
-    return pow(x - 1, 3);
+    return power(x - 1, 3);
 }
 
 // расчет значения функции G(x) в точке x
 double G(double x) {
-    return pow(x + 5, 3) / (1 + pow(sin(x), 2));
+    return power(x + 5, 3) / (1 + power(sin(x), 2));
 }
 
 // вывод строк таблицы с автоматическим закрытием таблицы
@@ -83,6 +107,7 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
     system("color F0");
+
 
     //Инициализация переменных
     double A;
@@ -114,14 +139,14 @@ int main()
     setlocale(LC_ALL, "C");
     if (!debug) HeadTable();
 
-    h = (B - A) / N; //Рассчет величины шага
+    h = (B - A) / N; // Расчет величины шага
+
+    if (A == B) N = 0; // Если входной отрезок есть точка, изменить количество разделений 
 
     for (i = 0; i <= N; i++) {
         x = A + i * h;
         PrintTable(x, i, N, debug);
     }
+
     return 0;
 }
-
-
-
