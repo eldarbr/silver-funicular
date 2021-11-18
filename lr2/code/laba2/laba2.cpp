@@ -105,18 +105,18 @@ void PrintTable(double x, int i, int N, bool debug = false) {
 
 int main()
 {
-    setlocale(LC_ALL, "Russian");
+    setlocale(LC_ALL, "Russian"); // подключение русского языка
     system("color F0");
 
     cout << power(sin(4), 2) << "\n";
 
     //Инициализация переменных
-    double A;
-    double B;
-    int N;
-    double h;
-    double x;
-    int i;
+    double A;   // начало отрезка
+    double B;   // конец отрезка
+    int N;      // количество интервалов, на которое делится отрезок [A;B]
+    double h;   // шаг
+    double x;   // приращение
+    int i;      // индекс приращения
     bool debug = false;
 
     // Ввод и проверка данных
@@ -145,7 +145,7 @@ int main()
     }
     
     // Подготовка таблицы
-    setlocale(LC_ALL, "C");
+    setlocale(LC_ALL, "C"); // отключение русского языка
     if (!debug) HeadTable();
 
     for (i = 0; i <= N; i++) {
