@@ -148,7 +148,7 @@ int main()
     setlocale(LC_ALL, "C"); // отключение русского языка
     if (!debug) HeadTable();
 
-    for (i = 0; i <= N; i++) {
+    for (i = 0; i <= N; i++) { //посторная печать таблицы в цикле
         x = A + i * h;
         PrintTable(x, i, N, debug);
     }
