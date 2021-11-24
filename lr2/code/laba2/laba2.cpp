@@ -117,7 +117,7 @@ int main()
     double h;   // шаг
     double x;   // приращение
     int i;      // индекс приращения
-    bool debug = false;
+    bool debug = false; // 
 
     // Ввод и проверка данных
     cout << "Введите А - координату начала отрезка [A;B]: \t";
@@ -145,10 +145,10 @@ int main()
     }
     
     // Подготовка таблицы
-    setlocale(LC_ALL, "C"); // отключение русского языка
+    setlocale(LC_ALL, "C");     // отключение русского языка
     if (!debug) HeadTable();
 
-    for (i = 0; i <= N; i++) { //посторная печать таблицы в цикле
+    for (i = 0; i <= N; i++) {  // посторная печать таблицы в цикле
         x = A + i * h;
         PrintTable(x, i, N, debug);
     }
