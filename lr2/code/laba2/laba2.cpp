@@ -84,22 +84,17 @@ double G(double x) {
 
 // вывод строк таблицы с автоматическим закрытием таблицы
 void PrintTable(double x, int i, int N, bool debug = false) {
-    if (debug) {
-        cout << x << "\t" << F(x) << "\t" << G(x) << endl;
-    }
-    else {
-        cout << "\t" << char(179) << setw(19) << setfill(char(255)) << i
-            << char(179) << setw(19) << setprecision(4) << x
-            << setfill(char(255))
-            << char(179) << setw(19) << setprecision(4) << F(x)
-            << setfill(char(255))
-            << char(179) << setw(19) << setprecision(4) << G(x)
-            << setfill(char(255)) << char(179) << endl;
-        if (i != N)
+    cout << "\t" << char(179) << setw(19) << setfill(char(255)) << i
+         << char(179) << setw(19) << setprecision(4) << x
+         << setfill(char(255))
+         << char(179) << setw(19) << setprecision(4) << F(x)
+         << setfill(char(255))
+         << char(179) << setw(19) << setprecision(4) << G(x)
+         << setfill(char(255)) << char(179) << endl;
+         if (i != N)
             BetweenTheRaws();
-        else
+         else
             BottomTable();
-    }
 }
 
 
@@ -117,7 +112,6 @@ int main()
     double h;   // шаг
     double x;   // приращение
     int i;      // индекс приращения
-    bool debug = false; // 
 
     // Ввод и проверка данных
     cout << "Введите А - координату начала отрезка [A;B]: \t";
@@ -146,11 +140,11 @@ int main()
     
     // Подготовка таблицы
     setlocale(LC_ALL, "C");     // отключение русского языка
-    if (!debug) HeadTable();
+    HeadTable();
 
     for (i = 0; i <= N; i++) {  // посторная печать таблицы в цикле
         x = A + i * h;
-        PrintTable(x, i, N, debug);
+        PrintTable(x, i, N);
     }
 
     return 0;
