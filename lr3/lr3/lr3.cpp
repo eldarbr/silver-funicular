@@ -14,14 +14,13 @@
 
 #include <iostream>
 #include <fstream>
-#include <string>
 
 using namespace std;
 
 int main()
 {
 	setlocale(LC_ALL, "Russian"); // подключение русского языка
-	system("color F0");			// 
+	system("color F0");			// приведение цвта консоли к каноничному
 	int N;			// первое число из файла
 	int M;			// второе число из файла
 	int VEC[7] = {0};		// массив,считываемый из файла
@@ -96,7 +95,9 @@ int main()
 			iMinPolEl = i;
 		} // if
 	} // for
-	cout << "Минимальный положительный элемент NEWVEC:\t" << MinPolEl << "\n" << "Индекс минимального положительного элемента:\t" << iMinPolEl;
+	cout << "Минимальный положительный элемент NEWVEC:\t" << MinPolEl << "\n" 
+		<< "Индекс минимального положительного элемента:\t" << iMinPolEl;
+	
 	system("pause");
 	return 0;
 }
