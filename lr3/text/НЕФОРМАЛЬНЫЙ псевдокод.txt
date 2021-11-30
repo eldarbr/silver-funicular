@@ -1,0 +1,23 @@
+1.	read:
+	n
+	m
+	vec
+
+2.	sum0 = sum(vec[0:n] where vec[0:n]<0)
+	newvec[i] = vec[i] + sum0
+
+3.	ln = newvec.length
+	sum1 = sum(newvec)
+	sum2 = sum(newvec[0:n] where newvec[0:n]>0)
+	sum3 = sum(newvec[m:ln] where newvec[m:length]<0)
+
+4.	log:
+	newvec
+	sum1
+	sum2
+	sum3
+
+5.	find first positive in newvec[n:m]
+	log:
+	position, value
+	
