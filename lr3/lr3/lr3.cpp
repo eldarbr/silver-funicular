@@ -8,7 +8,7 @@
 * Programmer(s) : Багиров Э., Нуриев Н.                         *
 * Modifyed By   :                                               *
 * Created       : 11/28/21                                      *
-* Last Revision : 1_/__/21                                      *
+* Last Revision : 12/09/21                                      *
 * Comment(s)    : Код к ЛР№3 - "Одномерные массивы"				*
 *																*
 \***************************************************************/
@@ -43,17 +43,20 @@ int main()
 	int neg;						// сумма отрицательных элементов VEC среди первых n
 	int entireSum;					// полная сумма элементов массива NEWVEC
 	int positiveSum;				// сумма отрицательных элементов NEWVEC среди первых n
-	int negativeSum;				// сумма положительных элементов NEWVEC среди поледних m
+	int negativeSum;				// сумма положительных элементов NEWVEC среди последних m
 	int minPosElementPosition;		// расположение наименьшего положительного элемента
 	int minPosElementValue;			// значение наименьшего положительного элемента
 
-	/* КОНЕЦ ОБЪЯВЛЕНИЕ ПЕРЕМЕННЫХ */
+	// имя файла
+	const string filename = "cor.test.3.txt";
+
+	/* КОНЕЦ ОБЪЯВЛЕНИЯ ПЕРЕМЕННЫХ */
 
 
 	/* ЧТЕНИЕ ФАЙЛА И ПРОВЕРКА ДАННЫХ */
 
 	ifstream fl;					// создание объекта класса ifstream
-	fl.open("lr3.txt");				// связывание объекта с файлом
+	fl.open(filename);				// связывание объекта с файлом
 
 	fl >> N;						// сохраниение первого входного числа в N
 
@@ -103,9 +106,10 @@ int main()
 
 	fl.close();						// отпуск файла
 
+	cout << "VEC:\t";
 	PrintArray(VEC, length);		// эхо-печать входного массива
 
-	/* КОНЕЦ ЧТЕНИЕ ФАЙЛА И ПРОВЕРКА ДАННЫХ */
+	/* КОНЕЦ ЧТЕНИЯ ФАЙЛА И ПРОВЕРКИ ДАННЫХ */
 
 
 	/* ФОРМИРОВАНИЕ МАССИВА NEWVEC */
@@ -124,7 +128,7 @@ int main()
 		NEWVEC[i] = VEC[i] + neg;
 	}
 
-	/* КОНЕЦ ФОРМИРОВАНИЕ МАССИВА NEWVEC */
+	/* КОНЕЦ ФОРМИРОВАНИЯ МАССИВА NEWVEC */
 
 
 	/* ПОИСК СУММ */
@@ -153,12 +157,13 @@ int main()
 
 	/* ПЕЧАТЬ NEWVEC И СУММ*/
 
+	cout << "NEWVEC:\t";
 	PrintArray(NEWVEC, normal_length);
 	cout << "entireSum: " << entireSum << "\n";
 	cout << "positiveSum: " << positiveSum << "\n";
 	cout << "negativeSum: " << negativeSum << "\n";
 
-	/* КОНЕЦ ПЕЧАТЬ NEWVEC И СУММ*/
+	/* КОНЕЦ ПЕЧАТИ NEWVEC И СУММ*/
 
 
 	/* ПОИСК НАИМЕНЬШЕГО ПОЛОЖИТЕЛЬНОГО */
@@ -166,7 +171,14 @@ int main()
 	minPosElementPosition = -1;
 	minPosElementValue = 0;
 
-	for (int i = N;  i < M; i++) {
+	if (M == 7) {
+		M = 6;
+	}
+	if (N == 7) {
+		N = 6;
+	}
+
+	for (int i = N;  i <= M; i++) {
 		if (NEWVEC[i] > 0) {
 			if (NEWVEC[i] < minPosElementValue || minPosElementValue == 0) {
 				minPosElementValue = NEWVEC[i];
@@ -174,15 +186,16 @@ int main()
 			}
 		}
 	}
-	cout << "Наименьший положительный элемент в интервале [" << N << ";" << M << "):\n";
+	cout << "Наименьший положительный элемент в интервале [" << N << ";" << M << "]:\n";
 	if (minPosElementPosition != -1) {
-		cout << "индекс - " << minPosElementPosition << "\nзначение - " << minPosElementValue << "\n";
+		cout << "индекс - " << minPosElementPosition << "\nзначение - "
+			<< minPosElementValue << "\n";
 	}
 	else {
 		cout << "В заданном интервале нет положительных элементов";
 	}
 
-	/* КОНЕЦ ПОИСК НАИМЕНЬШЕГО ПОЛОЖИТЕЛЬНОГО */
+	/* КОНЕЦ ПОИСКА НАИМЕНЬШЕГО ПОЛОЖИТЕЛЬНОГО */
 
 	return 0;
 }
