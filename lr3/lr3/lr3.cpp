@@ -20,8 +20,8 @@ using namespace std;
 
 
 
-void PrintArray(int array[], int lenght) {
-	for (int i = 0; i < lenght; i++) {
+void PrintArray(int array[], int length) {
+	for (int i = 0; i < length; i++) {
 		cout << array[i] << " ";
 	}
 	cout << endl;
@@ -34,12 +34,12 @@ int main()
 
 	/* ОБЪЯВЛЕНИЕ ПЕРЕМЕННЫХ */
 
-	const int normal_lenght = 7;	// нормальная длина массива
+	const int normal_length = 7;	// нормальная длина массива
 
 	int N;							// первое входное число
 	int M;							// второе входное число
-	int VEC[normal_lenght];			// входной массив
-	int NEWVEC[normal_lenght];		// создаваемый массив
+	int VEC[normal_length];			// входной массив
+	int NEWVEC[normal_length];		// создаваемый массив
 	int neg;						// сумма отрицательных элементов VEC среди первых n
 	int entireSum;					// полная сумма элементов массива NEWVEC
 	int positiveSum;				// сумма отрицательных элементов NEWVEC среди первых n
@@ -62,7 +62,12 @@ int main()
 		cout << "Ошибка: файл пуст.\n";
 		return 1;
 	}
-
+	if (fl.fail()) //в файле не число
+	{
+		cout << "Ошибка: сбой при чтении файла.\n" << endl;
+		fl.close();    //закрыть файл
+		return 3;       //выход по ошибке
+	}
 	// проверка N
 	if (N < 0 || N > 7) {
 		cout << "Ошибка: значение N вне границ.\n";
@@ -83,22 +88,22 @@ int main()
 		return 3;
 	}
 
-	int lenght = 0;					// для подсчета количества элементов в массиве
+	int length = 0;					// для подсчета количества элементов в массиве
 
 	// считывание данных в массив VEC и сохранение его длины в length
 	while (!fl.eof()) {
-		fl >> VEC[lenght];
-		lenght++;
+		fl >> VEC[length];
+		length++;
 	}
 
-	if (lenght != normal_lenght) {
+	if (length != normal_length) {
 		cout << "Ошибка: длина массива должна быть равна 7.\n";
 		return 4;
 	}
 
 	fl.close();						// отпуск файла
 
-	PrintArray(VEC, lenght);		// эхо-печать входного массива
+	PrintArray(VEC, length);		// эхо-печать входного массива
 
 	/* КОНЕЦ ЧТЕНИЕ ФАЙЛА И ПРОВЕРКА ДАННЫХ */
 
@@ -115,7 +120,7 @@ int main()
 	}
 
 	// нахождение элементов массива NEWVEC
-	for (int i = 0; i < normal_lenght; i++) {
+	for (int i = 0; i < normal_length; i++) {
 		NEWVEC[i] = VEC[i] + neg;
 	}
 
@@ -128,7 +133,7 @@ int main()
 	positiveSum = 0;
 	negativeSum = 0;
 
-	for (int i = 0; i < normal_lenght; i++) {
+	for (int i = 0; i < normal_length; i++) {
 
 		entireSum += NEWVEC[i];		// прибавление любого элемента к полной сумме
 
@@ -138,7 +143,7 @@ int main()
 		}
 
 		// проверка элемента на позицию и значение
-		if (i >= normal_lenght - M && NEWVEC[i] < 0) {
+		if (i >= normal_length - M && NEWVEC[i] < 0) {
 			negativeSum += NEWVEC[i];
 		}
 	}
@@ -148,7 +153,7 @@ int main()
 
 	/* ПЕЧАТЬ NEWVEC И СУММ*/
 
-	PrintArray(NEWVEC, normal_lenght);
+	PrintArray(NEWVEC, normal_length);
 	cout << "entireSum: " << entireSum << "\n";
 	cout << "positiveSum: " << positiveSum << "\n";
 	cout << "negativeSum: " << negativeSum << "\n";
