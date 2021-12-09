@@ -24,6 +24,7 @@ void PrintArray(int array[], int lenght) {
 	for (int i = 0; i < lenght; i++) {
 		cout << array[i] << " ";
 	}
+	cout << endl;
 }
 
 int main()
@@ -84,7 +85,7 @@ int main()
 
 	int lenght = 0;					// для подсчета количества элементов в массиве
 
-	// считывание данных в массив VEC и сохранение его длины в k
+	// считывание данных в массив VEC и сохранение его длины в length
 	while (!fl.eof()) {
 		fl >> VEC[lenght];
 		lenght++;
@@ -137,12 +138,12 @@ int main()
 		}
 
 		// проверка элемента на позицию и значение
-		if (i >= M && NEWVEC[i] < 0) {
+		if (i >= normal_lenght - M && NEWVEC[i] < 0) {
 			negativeSum += NEWVEC[i];
 		}
 	}
 
-	/* КОНЕЦ ПОИСК СУММ */
+	/* КОНЕЦ ПОИСКА СУММ */
 
 
 	/* ПЕЧАТЬ NEWVEC И СУММ*/
@@ -160,7 +161,7 @@ int main()
 	minPosElementPosition = -1;
 	minPosElementValue = 0;
 
-	for (int i = N; i < M; i++) {
+	for (int i = N;  i < M; i++) {
 		if (NEWVEC[i] > 0) {
 			if (NEWVEC[i] < minPosElementValue || minPosElementValue == 0) {
 				minPosElementValue = NEWVEC[i];
