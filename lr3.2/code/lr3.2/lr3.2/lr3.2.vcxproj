@@ -149,6 +149,9 @@
   <ItemGroup>
     <ClCompile Include="lr3.2.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="corr_test_0.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
