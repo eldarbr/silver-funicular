@@ -27,7 +27,7 @@ void print_with_highlits(char str[], int highlights[]) {
     cout << endl;
 }
 
-
+// ПОИСК ПОВТОРЯЮЩИХСЯ СИМВОЛОВ
 void find_duplicated_chars(char str1[], char str2[]) {
     int max_len = get_str_length(str1);
     if (get_str_length(str2) > max_len)
@@ -53,7 +53,7 @@ void find_duplicated_chars(char str1[], char str2[]) {
     print_with_highlits(str2, dup);
 }
 
-
+// ПОИСК ЗАДАННОГО СЛОВА В СТРОКАХ
 int count_word_matches(char target_word[], char s[]) {
     int num = 0;
     bool match = true;
@@ -95,9 +95,17 @@ int main()
 {
     setlocale(LC_ALL, "RUS");
 
-    char target_word[] = "home";
+   /* char target_word[] = "home";
     char s1[] = "home home home mouse home mouse car home home";
-    char s2[] = "home house car mouse";
+    char s2[] = "home house car mouse";*/
+
+    char target_word[500];
+    char s1[500];
+    char s2[500];
+
+    cin.getline(target_word, 59);
+    cin.getline(s1, 500);
+    cin.getline(s2, 500);
 
     find_duplicated_chars(s1, s2);
     words_statistics(target_word, s1, s2);
