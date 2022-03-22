@@ -17,7 +17,6 @@ void print_with_highlits(char str[], int highlights[]) {
     int length = get_str_length(str);
     for (int i = 0; i < length; i++) {
         if (highlights[i]==1) {
-            
             cout << "\x1b[4m" << str[i] << "\x1b[0m";
         }
         else {
