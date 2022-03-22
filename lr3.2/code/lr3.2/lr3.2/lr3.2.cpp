@@ -75,7 +75,7 @@ int count_word_matches(char target_word[], char s[]) {
     return num;
 }
 
-
+// СРАВНЕНИЕ ДВУХ СТРОК ПО НАЛИЧИЮ ЗАДАННОГО СЛОВА
 void words_statistics(char target_word[], char s1[], char s2[]) {
     int word_matches1 = count_word_matches(target_word, s1);
     int word_matches2 = count_word_matches(target_word, s2);
