@@ -29,11 +29,11 @@ void print_with_highlits(char str[], int highlights[]) {
 // ПОИСК ПОВТОРЯЮЩИХСЯ СИМВОЛОВ
 void find_duplicated_chars(char str1[], char str2[]) {
     int max_len = get_str_length(str1);
-    if (get_str_length(str2) > max_len)
+    int min_len = get_str_length(str2);
+    if (get_str_length(str2) > max_len) {
         max_len = get_str_length(str2);
-    int min_len = get_str_length(str1);
-    if (get_str_length(str2) > min_len)
-        min_len = get_str_length(str2);
+        min_len = get_str_length(str1);
+    }
     int num = 0;
     int *dup = new int[max_len];
     for (int i = 0; i < max_len; i++) {
