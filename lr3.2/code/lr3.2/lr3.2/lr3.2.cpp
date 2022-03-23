@@ -14,7 +14,7 @@ int get_str_length(char a[]) {
 }
 
 // ВЫВОД СТРОКИ С ПОДЧЕРКИВАНИЕМ СИМВОЛОВ ПО ИНДЕКСАМ
-void print_with_highlits(char str[], int highlights[]) {
+void print_with_highlights(char str[], int highlights[]) {
     int length = get_str_length(str);
     for (int i = 0; i < length; i++) {
         if (highlights[i]==1) {
@@ -49,8 +49,8 @@ void find_duplicated_chars(char str1[], char str2[]) {
     }
 
     cout << "всего дупликатов: " << num << endl;
-    print_with_highlits(str1, dup);
-    print_with_highlits(str2, dup);
+    print_with_highlights(str1, dup);
+    print_with_highlights(str2, dup);
 }
 
 // ПОИСК ЗАДАННОГО СЛОВА В СТРОКАХ
@@ -91,9 +91,9 @@ void words_statistics(char target_word[], char s1[], char s2[]) {
         << word_matches2 << " против " << word_matches1 << endl;
 }
 
-const string filename = ".txt";
+//const string filename = ".txt";
 //const string filename = "corr_test_0.txt";
-//const string filename = "corr_test_1.txt";
+const string filename = "corr_test_1.txt";
 //const string filename = "corr_test_2.txt";
 //const string filename = "incorr_test_0.txt";
 //const string filename = "incorr_test_1.txt";
