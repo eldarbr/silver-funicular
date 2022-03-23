@@ -26,5 +26,17 @@
     <Text Include="corr_test_0.txt">
       <Filter>Файлы ресурсов\входные данные</Filter>
     </Text>
+    <Text Include="corr_test_1.txt">
+      <Filter>Файлы ресурсов\входные данные</Filter>
+    </Text>
+    <Text Include="corr_test_2.txt">
+      <Filter>Файлы ресурсов\входные данные</Filter>
+    </Text>
+    <Text Include="incorr_test_0.txt">
+      <Filter>Файлы ресурсов\входные данные</Filter>
+    </Text>
+    <Text Include="incorr_test_1.txt">
+      <Filter>Файлы ресурсов\входные данные</Filter>
+    </Text>
   </ItemGroup>
 </Project>

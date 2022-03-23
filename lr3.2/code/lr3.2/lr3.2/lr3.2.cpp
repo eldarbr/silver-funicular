@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <fstream>
 using namespace std;
 
 // НАХОЖДЕНИЕ ДЛИНЫ СТРОКИ
@@ -54,9 +55,9 @@ void find_duplicated_chars(char str1[], char str2[]) {
 
 // ПОИСК ЗАДАННОГО СЛОВА В СТРОКАХ
 int count_word_matches(char target_word[], char s[]) {
-    int num = 0;
-    bool match = true;
-    int start = 0;
+    int num = 0;            // КОЛИЧЕСТВО ЗАДАННОГО СЛОВА В СТРОКЕ
+    bool match = true;          
+    int start = 0;          
     for (int i = 0;i < get_str_length(s)+1; i++) {
         //cout << s[i] << endl;
         if (s[i] == ' ' || s[i] == '\0') {
@@ -90,23 +91,50 @@ void words_statistics(char target_word[], char s1[], char s2[]) {
         << word_matches2 << " против " << word_matches1 << endl;
 }
 
+const string filename = ".txt";
+//const string filename = "corr_test_0.txt";
+//const string filename = "corr_test_1.txt";
+//const string filename = "corr_test_2.txt";
+//const string filename = "incorr_test_0.txt";
+//const string filename = "incorr_test_1.txt";
+
 int main()
 {
     setlocale(LC_ALL, "RUS");
 
-   /* char target_word[] = "home";
-    char s1[] = "home home home mouse home mouse car home home";
-    char s2[] = "home house car mouse";*/
+    /* char target_word[] = "home";
+     char s1[] = "home home home mouse home mouse car home home";
+     char s2[] = "home house car mouse";*/
 
-    char target_word[500];
-    char s1[500];
-    char s2[500];
+    char target_word[500];      // ЗАДАННОЕ СЛОВО
+    char s1[500];               // ПЕРВАЯ СТРОКА
+    char s2[500];               // ВТОРАЯ СТРОКА
 
-    cin.getline(target_word, 59);
-    cin.getline(s1, 500);
-    cin.getline(s2, 500);
-
-    find_duplicated_chars(s1, s2);
-    words_statistics(target_word, s1, s2);
-
+    ifstream f1;                // СОЗДАНИЕ ОБЪЕКТА КЛАССА ifstream
+    f1.open(filename);          // СВЯЗЫВАНИЕ ОБЪЕКТА С ФАЙЛОМ
+    if (f1.is_open()) {
+        cout << "Файл найден." << endl;
+        f1.getline(target_word, 59);    // ЧТЕНИЕ ПЕРВОЙ СТРОКИ ИЗ ФАЙЛА
+        f1.getline(s1, 500);            // ЧТЕНИЕ ВТОРОЙ СТРОКИ ИЗ ФАЙЛА
+        f1.getline(s2, 500);            // ЧТЕНИЕ ТРЕТЬЕЙ СТРОКИ ИЗ ФАЙЛА
+    }
+    else {
+        cout << "Файл не найден! Введите данные вручную:" << endl;
+        cin.getline(target_word, 59);   // ЧТЕНИЕ ПЕРВОЙ СТРОКИ
+        cin.getline(s1, 500);           // ЧТЕНИЕ ВТОРОЙ СТРОКИ
+        cin.getline(s2, 500);           // ЧТЕНИЕ ТРЕТЬЕЙ СТРОКИ
+    }
+    if (target_word[0] == '\0') {
+        cout << "Ошибка! Слово не получено!" << endl;
+        return 1;
+    }
+    else if (target_word[0] == ' ') {
+        cout << "Ошибка! Слово не должно начинаться с пробела!" << endl;
+        return 2;
+    }
+    else {
+        find_duplicated_chars(s1, s2);      // ПОИСК ПОВТОРЯБЩИХСЯ СИМВОЛОВ
+        words_statistics(target_word, s1, s2);  // ПОИСК ЗАДАННОГО СЛОВА В СТРОКАХ
+    }
+    return 0;
 }
