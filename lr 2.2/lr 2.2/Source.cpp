@@ -83,7 +83,7 @@ void product(int** arr, int row, int col) {
 //const string filename = "test2.txt";
 //const string filename = "err_test1.txt";
 //const string filename = "err_test2.txt";
-//const string filename = "stealth_file.txt";
+//const string filename = "hollow_file.txt";
 
 int main()
 {
