@@ -18,15 +18,16 @@ void Errors(int x) {
     case 0:
         cout << "Œ¯Ë·Í‡! œÂÂÁ‡ÔÛÒÚËÚÂ ÔÓ„‡ÏÏÛ Ë ‚‚Â‰ËÚÂ \"1\" ËÎË \"0\"!";
         exit(0);
+    case 2:
+        cout << "Œ¯Ë·Í‡! ‘‡ÈÎ ÔÛÒÚÓÈ! " << endl;
+        exit(0);
+    case 5:
+        cout << "Œ¯Ë·Í‡! ¬ Ù‡ÈÎÂ ÌÂ‰ÓÒÚ‡ÚÓ˜ÌÓ ‰‡ÌÌ˚ı! " << endl;
+        exit(0);
+    case 6:
+        cout << "Œ¯Ë·Í‡! ¬ Ù‡ÈÎÂ ÌÂ‰ÓÒÚ‡ÚÓ˜ÌÓ ˝ÎÂÏÂÌÚÓ‚ Ï‡ÒÒË‚‡! " << endl;
+        exit(0);
     }
-}
-
-// ‘”Õ ÷»ﬂ ƒÀﬂ Õ¿’Œ∆ƒ≈Õ»ﬂ Ã¿ —»Ã”Ã¿
-long long maxim(long long ber, long long ike) {
-    if (ber > ike)
-        return ber;
-    else
-        return ike;
 }
 
 // ‘”Õ ÷»ﬂ ƒÀﬂ ¬€ƒ≈À≈Õ»ﬂ œ¿Ãﬂ“» œŒƒ Ã¿“–»÷”
@@ -44,14 +45,35 @@ void input_matrix(int** arr, int row, int col) {
             cin >> arr[i][j];
 }
 
+// ‘”Õ ÷»ﬂ ¬¬Œƒ¿ Ã¿“–»÷€ »« ‘¿…À¿
+void matrix_from_file(int** arr, int row, int col, const string filename) {
+    ifstream FN;
+    int a[2];
+    FN.open(filename);
+    FN >> a[0] >> a[1];
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < col; j++) {
+            FN >> arr[i][j];
+            if (FN.eof())
+                Errors(6);
+        }
+}
+
 // ‘”Õ ÷»ﬂ œ≈◊¿“» Ã¿“–»÷€
 void print_matrix(int** arr, int row, int col) {
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++)
-            cout << arr[i][j] << " ";
+            cout << arr[i][j]<< "\t";
         cout << endl;
-
     }
+}
+
+// ‘”Õ ÷»ﬂ ƒÀﬂ Õ¿’Œ∆ƒ≈Õ»ﬂ Ã¿ —»Ã”Ã¿
+long long maxim(long long ber, long long ike) {
+    if (ber > ike)
+        return ber;
+    else
+        return ike;
 }
 
 // ‘”Õ ÷»ﬂ ƒÀﬂ ÕÕ¿’Œ∆ƒ≈Õ»ﬂ œ–Œ»«¬≈ƒ≈Õ»… —“–Œ  Ã¿“–»÷€ œŒ «¿ƒ¿Õ»ﬁ
@@ -83,7 +105,9 @@ void product(int** arr, int row, int col) {
 //const string filename = "test2.txt";
 //const string filename = "err_test1.txt";
 //const string filename = "err_test2.txt";
+//const string filename = "no_file.txt";
 //const string filename = "hollow_file.txt";
+const string filename = "err_test3.txt";
 
 int main()
 {
@@ -109,9 +133,16 @@ int main()
         fn.open(filename);
         if (!fn.is_open())
             Errors(1);
+        if (fn.eof())
+            Errors(2);
         fn >> N;
+        if (fn.eof())
+            Errors(5);
         if (N == 0)
             Errors(3);
+        fn >> M;
+        if (fn.eof())
+            Errors(5);
         if (M == 0)
             Errors(4);
         cout << " ÓÎË˜ÂÒÚ‚Ó ÒÚÓÍ:  " << N << endl;
@@ -132,9 +163,7 @@ int main()
         print_matrix(matrix, N, M);
     }
     else {
-        for (int i = 0; i < N; i++) 
-            for (int j = 0; j < M; j++) 
-                fn >> matrix[i][j];
+        matrix_from_file(matrix, N, M, filename);
         cout << "œÓÎÛ˜ÂÌÌ‡ˇ Ï‡ÚËˆ‡:" << endl;
         print_matrix(matrix, N, M);
     }

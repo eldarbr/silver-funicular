@@ -38,5 +38,11 @@
     <Text Include="err_test2.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
+    <Text Include="hollow_file.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="err_test3.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
   </ItemGroup>
 </Project>
