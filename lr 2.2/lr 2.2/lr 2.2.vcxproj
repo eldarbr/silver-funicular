@@ -146,6 +146,7 @@
     <Text Include="err_test1.txt" />
     <Text Include="err_test2.txt" />
     <Text Include="err_test3.txt" />
+    <Text Include="err_test4.txt" />
     <Text Include="file.txt" />
     <Text Include="hollow_file.txt" />
     <Text Include="test1.txt" />

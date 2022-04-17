@@ -55,7 +55,8 @@ void matrix_from_file(int** arr, int row, int col, const string filename) {
         for (int j = 0; j < col; j++) {
             FN >> arr[i][j];
             if (FN.eof())
-                Errors(6);
+                if (j != col-1)
+                    Errors(6);
         }
 }
 
@@ -100,14 +101,15 @@ void product(int** arr, int row, int col) {
     cout << "Максимальное произведение элементов строки, не содержащей ноль:    " << max_prod << endl << endl;
 }
 
-//const string filename = "file.txt";
+const string filename = "file.txt";
 //const string filename = "test1.txt";
 //const string filename = "test2.txt";
 //const string filename = "err_test1.txt";
 //const string filename = "err_test2.txt";
 //const string filename = "no_file.txt";
 //const string filename = "hollow_file.txt";
-const string filename = "err_test3.txt";
+//const string filename = "err_test3.txt";
+//const string filename = "err_test4.txt";
 
 int main()
 {
@@ -141,10 +143,10 @@ int main()
         if (N == 0)
             Errors(3);
         fn >> M;
-        if (fn.eof())
-            Errors(5);
         if (M == 0)
             Errors(4);
+        if (fn.eof())
+            Errors(5);
         cout << "Количество строк:  " << N << endl;
         cout << "Количество столбцов:  " << M << endl;
     }
