@@ -175,5 +175,6 @@ int main()
 
 	// пюяявер опнхгбедемхи ярпнй люрпхжш он гюдюмхч
 	product(matrix, N, M);
-	system("pause");
+
+	return 0;
 }
