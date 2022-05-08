@@ -71,7 +71,7 @@ void PrintTable(int n, char m[], char k[], int kol, double gruz, bool last) {
     }
 }
 
-
+// структура
 struct aero {
     char m[7];
     char n[6];
@@ -93,12 +93,23 @@ void str_from_file(const string file, aero* mas) {
     }
 }
 
-// сортировка структуры
+// бортовой номер
+int num_from_struct(aero mas) {
+    int number = atoi(&mas.n[2]);
+    return number;
+}
+
+// сортировка структуры пузырьком
 void sort_the_struct(aero* mas, int M) {
     aero Temp;
-    for (int i = 0; i < M; i++) {
-        for (int j = i+1; j < M; j++){
-
+    int exch;
+    for (int i = 0; i < M-1; i++) {
+        for (int j = M-1; j > i; j--){
+            if (num_from_struct(mas[j]) < num_from_struct(mas[j - 1])) {
+                Temp = mas[j];
+                mas[j] = mas[j - 1];
+                mas[j - 1] = Temp;
+            }
         }
     }
 }
