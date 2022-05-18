@@ -100,7 +100,7 @@ void Errors(int x) {
         exit(4);
 
     case 5:
-        cout << "Ошибка! Неверное количество груза" << endl << endl;
+        cout << "Ошибка! Неверное масса груза" << endl << endl;
         exit(5);
     }
 }
@@ -196,14 +196,17 @@ void sort_the_struct(aero* mas, int M, int *rar) {
 }
 
 
-const string filename = "file.txt";
+//const string filename = "file.txt";
+const string filename = "file2.txt";
+//const string filename = "wrong1.txt";
+//const string filename = "wrong2.txt";
+//const string filename = "wrong3.txt";
+//const string filename = "wrong0.txt";
 
 int main()
 {
     int pas = 0;            // количество пассажиров
     double allgruz = 0;     // масса груза
-
-    HeadTable();            // печать оглавления таблицы
 
     ifstream fn;            // создание переменной класса ifstream
     fn.open(filename);      // открытие файла
@@ -217,6 +220,7 @@ int main()
         rar[i] = i;         // заполенение массива индексов
     aero* arr = new aero[N];
     str_from_file(filename, arr);
+    HeadTable();            // печать оглавления таблицы
     bool last = 0;          // флаг конца таблицы
     sort_the_struct(arr, N, rar);   // сортировка структуры по индексам
 

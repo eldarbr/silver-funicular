@@ -144,6 +144,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="file.txt" />
+    <Text Include="file2.txt" />
+    <Text Include="wrong1.txt" />
+    <Text Include="wrong2.txt" />
+    <Text Include="wrong3.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lr2.2.h" />

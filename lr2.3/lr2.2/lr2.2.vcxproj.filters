@@ -23,6 +23,10 @@
     <Text Include="file.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
+    <Text Include="wrong1.txt" />
+    <Text Include="wrong2.txt" />
+    <Text Include="wrong3.txt" />
+    <Text Include="file2.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lr2.2.h">
