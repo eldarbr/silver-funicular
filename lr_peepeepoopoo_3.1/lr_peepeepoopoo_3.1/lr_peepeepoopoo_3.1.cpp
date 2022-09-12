@@ -28,7 +28,7 @@ int random(int min, int max) {
 }
 
 float random_fl() {
-	return static_cast<float>(rand()) / RAND_MAX;
+	return rand() / float(RAND_MAX);
 }
 
 int random_sign() {
