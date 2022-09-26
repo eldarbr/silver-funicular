@@ -107,9 +107,11 @@ void generate_stepped(float* arr, unsigned int length, float min, float max, flo
 	float step = (max - min) / interval;
 	*(arr) = min;
 	int k = 0;
-	int num = 1;
+	int num = 2;
 	for (int i = 1; i < length; i++) {
-		*(arr + i) = *(arr + k) + random()/10000;
+		float q = random(0, (max - min) / 10) * random_sign();
+		*(arr + i) = *(arr + k) + q;
+		cout << " " << q;
 		num++;
 		if (num == interval) {
 			num = 1;
@@ -121,9 +123,12 @@ void generate_stepped(float* arr, unsigned int length, float min, float max, flo
 	
 
 int main()
-{ /*
+{ 
 	srand(time(NULL));
 	setlocale(LC_ALL, "rus");
+
+
+	cout << "КАКОЙ МАССИВ ХОТИТЕ СОЗДАТЬ?\n1.ВОЗРАСТАЮЩИЙ.\n2.УБЫВАЮЩИЙ.\n3.СЛУЧАЙНЫЙ.\n4.ПИЛООБРАЗНЫЙ.\n5.СИНУСОИДНЫЙ.\n6.СТУПЕНЧАТАЯ.";
 	int length;
 	int min;
 	int max;
@@ -137,11 +142,10 @@ int main()
 	cin >> max;
 	cout << "ВВЕДИТЕ ИНТЕРВАЛ: ";
 	cin >> interval;
-	// generate_stepped(arr, length, min, max, interval);
-	generate_sinuous(arr, length, min, max, interval);
-	for (int i = 0; i < length; i++) cout << arr[i] << "\n";
-
-	*/
-	cout << sine(-.5236) << endl << sine(.5236) << endl;
+	generate_stepped(arr, length, min, max, interval);
+	//generate_sinuous(arr, length, min, max, interval);
+	cout.precision(5);
+	for (int i = 0; i < length; i++) cout  <<  arr[i] << "\n";
+	//cout << sine(-.5236) << endl << sine(.5236) << endl;
 	return 0;
 }
