@@ -78,6 +78,19 @@ void generate_sawtooth(float* arr, unsigned int length, float min, float max, fl
 	}
 }
 
+// fast approximation of SINE function based on Taylor series
+float sine(float x) {
+	float pi = 3.1415;
+	float result = 5040 * x;
+	x = x * x * x;
+	result -= 840 * x;
+	x = x * x * x;
+	result += 42 * x;
+	x = x * x * x;
+	result -= x;
+	return result / 5040;
+}
+
 void generate_sinuous(float* arr, unsigned int length, float min, float max, float interval) {
 	float mid = (max + min) / 2;
 	float step = mid / interval;
@@ -108,7 +121,7 @@ void generate_stepped(float* arr, unsigned int length, float min, float max, flo
 	
 
 int main()
-{
+{ /*
 	srand(time(NULL));
 	setlocale(LC_ALL, "rus");
 	int length;
@@ -124,8 +137,11 @@ int main()
 	cin >> max;
 	cout << "ВВЕДИТЕ ИНТЕРВАЛ: ";
 	cin >> interval;
-	generate_stepped(arr, length, min, max, interval);
+	// generate_stepped(arr, length, min, max, interval);
+	generate_sinuous(arr, length, min, max, interval);
 	for (int i = 0; i < length; i++) cout << arr[i] << "\n";
 
+	*/
+	cout << sine(-.5236) << endl << sine(.5236) << endl;
 	return 0;
 }
