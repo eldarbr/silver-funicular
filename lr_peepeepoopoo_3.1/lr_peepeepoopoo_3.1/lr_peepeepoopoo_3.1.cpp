@@ -104,17 +104,18 @@ void generate_sinuous(float* arr, unsigned int length, float min, float max, flo
 }
 
 void generate_stepped(float* arr, unsigned int length, float min, float max, float interval) {
-	float step = (max - min) / interval;
+	float step = (max - min) / (length/interval-1);
+	cout << step << endl;
 	*(arr) = min;
 	int k = 0;
-	int num = 2;
+	int num = 1;
 	for (int i = 1; i < length; i++) {
-		float q = random(0, (max - min) / 10) * random_sign();
+		float q = random(0, (max - min) / 100) * random_sign();
 		*(arr + i) = *(arr + k) + q;
-		cout << " " << q;
+		cout << "=  " << q << endl;
 		num++;
 		if (num == interval) {
-			num = 1;
+			num = 0;
 			k = i + 1;
 			*(arr + k) = *(arr + i) + step;
 		}
@@ -144,7 +145,7 @@ int main()
 	cin >> interval;
 	generate_stepped(arr, length, min, max, interval);
 	//generate_sinuous(arr, length, min, max, interval);
-	cout.precision(5);
+	//cout.precision(50);
 	for (int i = 0; i < length; i++) cout  <<  arr[i] << "\n";
 	//cout << sine(-.5236) << endl << sine(.5236) << endl;
 	return 0;
