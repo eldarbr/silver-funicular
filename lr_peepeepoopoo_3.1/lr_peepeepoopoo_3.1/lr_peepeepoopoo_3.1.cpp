@@ -11,7 +11,6 @@ void generate_sawtooth(float* arr, unsigned int length, float min = NULL, float 
 void generate_sinuous(float* arr, unsigned int length, float min = NULL, float max = NULL, float interval = NULL);
 void generate_stepped(float* arr, unsigned int length, float min = NULL, float max = NULL, float interval = NULL);
 
-
 int random(int min, int max);
 int random();
 float random_fl();
@@ -92,25 +91,21 @@ float sine(float x) {
 }
 
 void generate_sinuous(float* arr, unsigned int length, float min, float max, float interval) {
-	float mid = (max + min) / 2;
-	float step = mid / interval;
-	int k = 0;
-	*(arr) = mid;
+	*(arr) = sin(0);
+	int dobby = max - (min + max) / 2;
 	for (int i = 1; i < length; i++) {
-		*(arr + i) = *(arr + i - 1) + pow(-1, k) * step;
-		if (arr[i]+ pow(-1, k) * step < min || arr[i]+ pow(-1, k) * step > max)
-			k++;
+		*(arr + i) = sin(i)*dobby;
 	}
 }
 
 void generate_stepped(float* arr, unsigned int length, float min, float max, float interval) {
-	float step = (max - min) / (length/interval-1);
+	float step = (max - min) / (length/interval);
 	cout << step << endl;
 	*(arr) = min;
 	int k = 0;
 	int num = 1;
 	for (int i = 1; i < length; i++) {
-		float q = random(0, (max - min) / 100) * random_sign();
+		float q = (rand() / 10000) * random_sign();
 		*(arr + i) = *(arr + k) + q;
 		cout << "=  " << q << endl;
 		num++;
@@ -123,30 +118,58 @@ void generate_stepped(float* arr, unsigned int length, float min, float max, flo
 }
 	
 
+void switch_num(int num, int length, float* arr, int min, int max, int interval) {
+	switch (num) {
+		case 1:
+			generate_ascending(arr, length);
+			break;
+		case 2:
+			generate_descending(arr, length);
+			break;
+		case 3:
+			generate_random(arr, length);
+			break;
+		case 4:
+			generate_sawtooth(arr, length, min, max, interval);
+			break;
+		case 5:
+			generate_sinuous(arr, length, min, max, interval);
+			break;
+		case 6:
+			generate_stepped(arr, length, min, max, interval);
+			break;
+	}
+
+}
+
 int main()
 { 
 	srand(time(NULL));
 	setlocale(LC_ALL, "rus");
 
 
-	cout << "КАКОЙ МАССИВ ХОТИТЕ СОЗДАТЬ?\n1.ВОЗРАСТАЮЩИЙ.\n2.УБЫВАЮЩИЙ.\n3.СЛУЧАЙНЫЙ.\n4.ПИЛООБРАЗНЫЙ.\n5.СИНУСОИДНЫЙ.\n6.СТУПЕНЧАТАЯ.";
-	int length;
+	cout << "КАКОЙ МАССИВ ХОТИТЕ СОЗДАТЬ?\n1.ВОЗРАСТАЮЩИЙ.\n2.УБЫВАЮЩИЙ.\n3.СЛУЧАЙНЫЙ.\n4.ПИЛООБРАЗНЫЙ.\n5.СИНУСОИДНЫЙ.\n6.СТУПЕНЧАТАЯ.\n";
+	int num;
+	cin >> num;
 	int min;
 	int max;
 	int interval;
-	cout << "BBE4UTE 4/\\UNY MACCUBA: ";
-	cin >> length;
+	int length;
+	if (num > 3){
+		cout << "ВВЕДИТЕ ДЛИНУ МАССИВА: ";
+		cin >> length;
+		cout << "ВВВЕДИТЕ НИЖНЮЮ ГРАНИЦУ: ";
+		cin >> min;
+		cout << "ВВЕДИТЕ ВЕРХНЮЮ ГРАНИЦУ: ";
+		cin >> max;
+		cout << "ВВЕДИТЕ ИНТЕРВАЛ: ";
+		cin >> interval;
+	}
+	else {
+		cout << "ВВЕДИТЕ ДЛИНУ МАССИВА: ";
+		cin >> length;
+	}
 	float* arr = new float[length];
-	cout << "ВВВЕДИТЕ НИЖНЮЮ ГРАНИЦУ: ";
-	cin >> min;
-	cout << "ВВЕДИТЕ ВЕРХНЮЮ ГРАНИЦУ: ";
-	cin >> max;
-	cout << "ВВЕДИТЕ ИНТЕРВАЛ: ";
-	cin >> interval;
-	generate_stepped(arr, length, min, max, interval);
-	//generate_sinuous(arr, length, min, max, interval);
-	//cout.precision(50);
+	switch_num(num, length, arr, min, max, interval);
 	for (int i = 0; i < length; i++) cout  <<  arr[i] << "\n";
-	//cout << sine(-.5236) << endl << sine(.5236) << endl;
-	return 0;
 }
