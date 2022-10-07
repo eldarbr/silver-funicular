@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <ctime>
+#include <fstream>
 
 using namespace std;
 
@@ -107,7 +108,6 @@ void generate_stepped(float* arr, unsigned int length, float min, float max, flo
 	for (int i = 1; i < length; i++) {
 		float q = (rand() / 10000) * random_sign();
 		*(arr + i) = *(arr + k) + q;
-		cout << "=  " << q << endl;
 		num++;
 		if (num == interval) {
 			num = 0;
@@ -118,58 +118,108 @@ void generate_stepped(float* arr, unsigned int length, float min, float max, flo
 }
 	
 
-void switch_num(int num, int length, float* arr, int min, int max, int interval) {
+void switch_num(int num, int length, float* arr) {
+	int min;
+	int max;
+	int interval;
+	unsigned int start_time;
+	unsigned int end_time;
+	unsigned int search_time;
+
 	switch (num) {
 		case 1:
+			start_time = clock();
 			generate_ascending(arr, length);
+			search_time = clock() - start_time;
+			cout << "ВРЕМЯ РАБОТЫ: " << search_time << endl;
 			break;
 		case 2:
+			start_time = clock();
 			generate_descending(arr, length);
+			search_time = clock() - start_time;
+			cout << "ВРЕМЯ РАБОТЫ: " << search_time << endl;
 			break;
 		case 3:
+			start_time = clock();
 			generate_random(arr, length);
+			search_time = clock() - start_time;
+			cout << "ВРЕМЯ РАБОТЫ: " << search_time << endl;
 			break;
 		case 4:
+			cout << "ВВВЕДИТЕ НИЖНЮЮ ГРАНИЦУ: ";
+			cin >> min;
+			cout << "ВВЕДИТЕ ВЕРХНЮЮ ГРАНИЦУ: ";
+			cin >> max;
+			cout << "ВВЕДИТЕ ИНТЕРВАЛ: ";
+			cin >> interval;
+			start_time = clock();
 			generate_sawtooth(arr, length, min, max, interval);
+			search_time = clock() - start_time;
+			cout << "ВРЕМЯ РАБОТЫ: " << search_time << endl;
 			break;
 		case 5:
+			cout << "ВВВЕДИТЕ НИЖНЮЮ ГРАНИЦУ: ";
+			cin >> min;
+			cout << "ВВЕДИТЕ ВЕРХНЮЮ ГРАНИЦУ: ";
+			cin >> max;
+			cout << "ВВЕДИТЕ ИНТЕРВАЛ: ";
+			cin >> interval;
+			start_time = clock();
 			generate_sinuous(arr, length, min, max, interval);
+			search_time = clock() - start_time;
+			cout << "ВРЕМЯ РАБОТЫ: " << search_time << endl;
 			break;
 		case 6:
+			cout << "ВВВЕДИТЕ НИЖНЮЮ ГРАНИЦУ: ";
+			cin >> min;
+			cout << "ВВЕДИТЕ ВЕРХНЮЮ ГРАНИЦУ: ";
+			cin >> max;
+			cout << "ВВЕДИТЕ ИНТЕРВАЛ: ";
+			cin >> interval;
+			start_time = clock();
 			generate_stepped(arr, length, min, max, interval);
+			search_time = clock() - start_time;
+			cout << "ВРЕМЯ РАБОТЫ: " << search_time << endl;
 			break;
 	}
 
 }
+
+
+const string filename = "file.txt";
 
 int main()
 { 
 	srand(time(NULL));
 	setlocale(LC_ALL, "rus");
 
-
-	cout << "КАКОЙ МАССИВ ХОТИТЕ СОЗДАТЬ?\n1.ВОЗРАСТАЮЩИЙ.\n2.УБЫВАЮЩИЙ.\n3.СЛУЧАЙНЫЙ.\n4.ПИЛООБРАЗНЫЙ.\n5.СИНУСОИДНЫЙ.\n6.СТУПЕНЧАТАЯ.\n";
+	ofstream fout(filename);
+	cout << "КАКОЙ МАССИВ ХОТИТЕ СОЗДАТЬ?\n1.ВОЗРАСТАЮЩИЙ\n2.УБЫВАЮЩИЙ\n3.СЛУЧАЙНЫЙ\n4.ПИЛООБРАЗНЫЙ\n5.СИНУСОИДНЫЙ\n6.СТУПЕНЧАТЫЙ\nВаш выбор: ";
 	int num;
 	cin >> num;
+	cout << endl;
 	int min;
 	int max;
 	int interval;
 	int length;
-	if (num > 3){
-		cout << "ВВЕДИТЕ ДЛИНУ МАССИВА: ";
-		cin >> length;
-		cout << "ВВВЕДИТЕ НИЖНЮЮ ГРАНИЦУ: ";
-		cin >> min;
-		cout << "ВВЕДИТЕ ВЕРХНЮЮ ГРАНИЦУ: ";
-		cin >> max;
-		cout << "ВВЕДИТЕ ИНТЕРВАЛ: ";
-		cin >> interval;
+	cout << "ВВЕДИТЕ ДЛИНУ МАССИВА: ";
+	cin >> length;
+	float* arr = new float[length];
+	switch_num(num, length, arr);
+	if (length < 150 || length > 200) {
+		int var;
+		cout << "ВЫВЕСТИ МАТРИЦУ:\n1.ДА\n2.НЕТ\n";
+		cin >> var;
+		if (var == 1)
+			for (int i = 0; i < length; i++)
+				cout << arr[i] << "\n";
+		else
+			return 0;
 	}
 	else {
-		cout << "ВВЕДИТЕ ДЛИНУ МАССИВА: ";
-		cin >> length;
+		for (int i = 0; i < length; i++) {
+			cout << arr[i] << "\n";
+			fout << arr[i] << "\n";
+		}
 	}
-	float* arr = new float[length];
-	switch_num(num, length, arr, min, max, interval);
-	for (int i = 0; i < length; i++) cout  <<  arr[i] << "\n";
 }
