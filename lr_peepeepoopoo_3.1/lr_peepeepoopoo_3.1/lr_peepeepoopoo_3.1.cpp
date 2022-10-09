@@ -13,15 +13,10 @@ void generate_sinuous(float* arr, unsigned int length, float min, float max);
 void generate_stepped(float* arr, unsigned int length, float min, float max, float interval);
 
 int random(int min, int max);
-int random();
 float random_fl();
 int random_sign();
 
 
-
-int random() {
-	return rand();
-}
 
 int random(int min, int max) {
 	return min + (max - min) * random_fl();
@@ -32,7 +27,7 @@ float random_fl() {
 }
 
 int random_sign() {
-	int qqq = random();
+	int qqq = rand();
 	if (qqq > RAND_MAX / 2)
 		return 1;
 	else
@@ -78,23 +73,11 @@ void generate_sawtooth(float* arr, unsigned int length, float min, float max, fl
 	}
 }
 
-// fast approximation of SINE function based on Taylor series
-float sine(float x) {
-	float pi = 3.1415;
-	float result = 5040 * x;
-	x = x * x * x;
-	result -= 840 * x;
-	x = x * x * x;
-	result += 42 * x;
-	x = x * x * x;
-	result -= x;
-	return result / 5040;
-}
-
 void generate_sinuous(float* arr, unsigned int length, float min, float max) {
-	int dobby = max - (min + max) / 2;
+	float scar = (min + max) / 2;
+	float dobby = max - scar;
 	for (int i = 0; i < length; i++) {
-		*(arr + i) = sin(i)*dobby;
+		*(arr + i) = sin(i) * dobby + scar;
 	}
 }
 
@@ -205,7 +188,7 @@ int main()
 	switch_num(num, length, arr);
 	if (length < 150 || length > 200) {
 		int var;
-		cout << "ВЫВЕСТИ МАТРИЦУ:\n1.ДА\n2.НЕТ\n";
+		cout << "ВЫВЕСТИ МАТРИЦУ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
 		cin >> var;
 		cout << "\n";
 		if (var == 1)
