@@ -9,7 +9,6 @@ int BLS();
 int SLS();
 int T();
 int B();
-int timeToWork();
 
 
 void InsSort(int* arr, int length) {
@@ -32,12 +31,12 @@ int BLS(int* arr, int length, int key) {
 }
 
 int SLS(int* arr, int length, int key) {
-	int last = arr[length-1];	// last element of the arr
-	arr[length - 1] = key;		// last element become key
+	int last = arr[length-1];	
+	arr[length - 1] = key;		
 	int i = 0;
 	while (arr[i] != key)
 		i++;
-	arr[length - 1] = last;		// put the last element back
+	arr[length - 1] = last;	
 	if (i < length-1 || arr[length - 1] == key)
 		return i;
 	return -1;					// NOT FOUND
@@ -119,11 +118,10 @@ int main() {
 	}
 
 	startTime = chrono::steady_clock::now();
-	InsSort(arr, length);		// insert sort for T and B
-	auto endTime = chrono::steady_clock::now();
+	InsSort(arr, length);		
+	auto endTime = chrono::steady_clock::now();	
 	auto time = chrono::duration_cast<chrono::microseconds>(endTime-startTime);
 	cout << "Время сортировки: " << time.count() << " мкс.\n";
-	//for (int i = 0; i < length; i++) cout << arr[i] << endl;
 
 	startTime = chrono::steady_clock::now();
 	indexToFound = T(arr, length, key);
