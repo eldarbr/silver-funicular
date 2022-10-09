@@ -8,9 +8,9 @@ using namespace std;
 void generate_ascending(float* arr, unsigned int length);
 void generate_descending(float* arr, unsigned int length);
 void generate_random(float* arr, unsigned int length);
-void generate_sawtooth(float* arr, unsigned int length, float min = NULL, float max = NULL, float interval = NULL);
-void generate_sinuous(float* arr, unsigned int length, float min = NULL, float max = NULL, float interval = NULL);
-void generate_stepped(float* arr, unsigned int length, float min = NULL, float max = NULL, float interval = NULL);
+void generate_sawtooth(float* arr, unsigned int length, float min, float max, float interval);
+void generate_sinuous(float* arr, unsigned int length, float min, float max);
+void generate_stepped(float* arr, unsigned int length, float min, float max, float interval);
 
 int random(int min, int max);
 int random();
@@ -91,10 +91,9 @@ float sine(float x) {
 	return result / 5040;
 }
 
-void generate_sinuous(float* arr, unsigned int length, float min, float max, float interval) {
-	*(arr) = sin(0);
+void generate_sinuous(float* arr, unsigned int length, float min, float max) {
 	int dobby = max - (min + max) / 2;
-	for (int i = 1; i < length; i++) {
+	for (int i = 0; i < length; i++) {
 		*(arr + i) = sin(i)*dobby;
 	}
 }
@@ -162,10 +161,8 @@ void switch_num(int num, int length, float* arr) {
 			cin >> min;
 			cout << "ВВЕДИТЕ ВЕРХНЮЮ ГРАНИЦУ: ";
 			cin >> max;
-			cout << "ВВЕДИТЕ ИНТЕРВАЛ: ";
-			cin >> interval;
 			start_time = clock();
-			generate_sinuous(arr, length, min, max, interval);
+			generate_sinuous(arr, length, min, max);
 			search_time = clock() - start_time;
 			cout << "ВРЕМЯ РАБОТЫ: " << search_time << endl;
 			break;
@@ -202,8 +199,10 @@ int main()
 	int max;
 	int interval;
 	int length;
+	system("cls");
 	cout << "ВВЕДИТЕ ДЛИНУ МАССИВА: ";
 	cin >> length;
+	system("cls");
 	float* arr = new float[length];
 	switch_num(num, length, arr);
 	if (length < 150 || length > 200) {
