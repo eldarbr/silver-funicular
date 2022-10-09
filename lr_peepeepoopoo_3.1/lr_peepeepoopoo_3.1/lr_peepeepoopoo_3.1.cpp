@@ -99,8 +99,7 @@ void generate_sinuous(float* arr, unsigned int length, float min, float max) {
 }
 
 void generate_stepped(float* arr, unsigned int length, float min, float max, float interval) {
-	float step = (max - min) / (length/interval);
-	cout << step << endl;
+	float step = (max - min) / (length/interval-1);
 	*(arr) = min;
 	int k = 0;
 	int num = 1;
@@ -202,13 +201,13 @@ int main()
 	system("cls");
 	cout << "ВВЕДИТЕ ДЛИНУ МАССИВА: ";
 	cin >> length;
-	system("cls");
 	float* arr = new float[length];
 	switch_num(num, length, arr);
 	if (length < 150 || length > 200) {
 		int var;
 		cout << "ВЫВЕСТИ МАТРИЦУ:\n1.ДА\n2.НЕТ\n";
 		cin >> var;
+		cout << "\n";
 		if (var == 1)
 			for (int i = 0; i < length; i++)
 				cout << arr[i] << "\n";
