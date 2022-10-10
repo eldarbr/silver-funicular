@@ -23,7 +23,7 @@ int random(int min, int max) {
 }
 
 float random_fl() {
-	return float(rand() / RAND_MAX);
+	return rand() / float(RAND_MAX);
 }
 
 int random_sign() {
@@ -36,7 +36,7 @@ int random_sign() {
 
 void generate_ascending(float* arr, unsigned int length) {
 	for (int i = 0; i < length; i++) {
-		*(arr + i) = random(0, 1000 * random(0, 3) * random_fl());
+		*(arr + i) = rand() * random_fl();
 		if (i > 0) {
 			*(arr + i) += *(arr + i - 1);
 		}
@@ -45,7 +45,7 @@ void generate_ascending(float* arr, unsigned int length) {
 
 void generate_ascending_int(float* arr, unsigned int length) {
 	for (int i = 0; i < length; i++) {
-		*(arr + i) = random(0, 1000 * random(0, 3));
+		*(arr + i) = rand()/1000;
 		if (i > 0) {
 			*(arr + i) += *(arr + i - 1);
 		}
@@ -54,7 +54,7 @@ void generate_ascending_int(float* arr, unsigned int length) {
 
 void generate_descending(float* arr, unsigned int length){
 	for (int i = 0; i < length; i++) {
-		*(arr + i) = random(-1000 * random(0,3) * random_fl(), 0);
+		*(arr + i) = rand()*random_fl()*(-1);
 		if (i > 0) {
 			*(arr + i) += *(arr + i - 1);
 		}
@@ -63,7 +63,7 @@ void generate_descending(float* arr, unsigned int length){
 
 void generate_descending_int(float* arr, unsigned int length) {
 	for (int i = 0; i < length; i++) {
-		*(arr + i) = random(-1000 * random(0, 3), 0);
+		*(arr + i) = rand()/1000 * (-1);
 		if (i > 0) {
 			*(arr + i) += *(arr + i - 1);
 		}
@@ -169,6 +169,7 @@ void switch_num(int num, int length, float* arr) {
 	unsigned int start_time;
 	unsigned int end_time;
 	unsigned int search_time;
+	int var;
 
 	switch (num) {
 		case 1:
@@ -176,30 +177,66 @@ void switch_num(int num, int length, float* arr) {
 			generate_ascending(arr, length);
 			search_time = clock() - start_time;
 			cout << "ВРЕМЯ РАБОТЫ ВОЗРАСТАЮЩЕЙ С ПЛАВАЮЩЕЙ ТОЧКОЙ: " << search_time << endl;
+			cout << "ВЫВЕСТИ ВОЗРАСТАЮЩИЙ МАССИВ С ПЛАВАЮЩЕЙ ТОЧКОЙ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
+			cin >> var;
+			cout << "\n";
+			if (var == 1)
+				for (int i = 0; i < length; i++)
+					cout << arr[i] << "\n";
 			start_time = clock();
 			generate_ascending_int(arr, length);
 			search_time = clock() - start_time;
 			cout << "ВРЕМЯ РАБОТЫ ВОЗРАСТАЮЩЕЙ ЦЕЛОЧИСЛЕННОЙ: " << search_time << endl;
+			cout << "ВЫВЕСТИ ВОЗРАСТАЮЩИЙ ЦЕЛОЧИСЛЕННЫЙ МАССИВ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
+			cin >> var;
+			cout << "\n";
+			if (var == 1)
+				for (int i = 0; i < length; i++)
+					cout << arr[i] << "\n";
 			break;
 		case 2:
 			start_time = clock();
 			generate_descending(arr, length);
 			search_time = clock() - start_time;
 			cout << "ВРЕМЯ РАБОТЫ УБЫВАЮЩЕЙ C ПЛАВАЮЩЕЙ ТОЧКОЙ: " << search_time << endl;
+			cout << "ВЫВЕСТИ МАССИВ С ПЛАВАЮЩЕЙ ТОЧКОЙ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
+			cin >> var;
+			cout << "\n";
+			if (var == 1)
+				for (int i = 0; i < length; i++)
+					cout << arr[i] << "\n";
 			start_time = clock();
 			generate_descending_int(arr, length);
 			search_time = clock() - start_time;
 			cout << "ВРЕМЯ РАБОТЫ УБЫВАЮЩЕЙ ЦЕЛОЧИСЛЕННОЙ: " << search_time << endl;
+			cout << "ВЫВЕСТИ ЦЕЛОЧИСЛЕННЫЙ МАССИВ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
+			cin >> var;
+			cout << "\n";
+			if (var == 1)
+				for (int i = 0; i < length; i++)
+					cout << arr[i] << "\n";
 			break;
 		case 3:
 			start_time = clock();
 			generate_random(arr, length);
 			search_time = clock() - start_time;
-			cout << "ВРЕМЯ РАБОТЫ СЛУЧАЙНОЙ С ПЛАВАЮЩЕЙ ТОЧКОЙ: " << search_time << endl;				
+			cout << "ВРЕМЯ РАБОТЫ СЛУЧАЙНОЙ С ПЛАВАЮЩЕЙ ТОЧКОЙ: " << search_time << endl;	
+			cout << "ВЫВЕСТИ МАССИВ С ПЛАВАЮЩЕЙ ТОЧКОЙ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
+			cin >> var;
+			cout << "\n";
+			if (var == 1)
+				for (int i = 0; i < length; i++)
+					cout << arr[i] << "\n";
 			start_time = clock();
 			generate_random_int(arr, length);
 			search_time = clock() - start_time;
 			cout << "ВРЕМЯ РАБОТЫ СЛУЧАЙНОЙ ЦЕЛОЧИСЛЕННОЙ: " << search_time << endl;
+			cout << "ВЫВЕСТИ ЦЕЛОЧИСЛЕННЫЙ МАССИВ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
+			cin >> var;
+			cout << "\n";
+			if (var == 1)
+				for (int i = 0; i < length; i++)
+					cout << arr[i] << "\n";
 			break;
 		case 4:
 			cout << "ВВВЕДИТЕ НИЖНЮЮ ГРАНИЦУ: ";
@@ -212,10 +249,22 @@ void switch_num(int num, int length, float* arr) {
 			generate_sawtooth(arr, length, min, max, interval);
 			search_time = clock() - start_time;
 			cout << "ВРЕМЯ РАБОТЫ ПИЛООБРАЗНОЙ С ПЛАВАЮЩЕЙ ТОЧКОЙ: " << search_time << endl;
+			cout << "ВЫВЕСТИ МАССИВ С ПЛАВАЮЩЕЙ ТОЧКОЙ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
+			cin >> var;
+			cout << "\n";
+			if (var == 1)
+				for (int i = 0; i < length; i++)
+					cout << arr[i] << "\n";
 			start_time = clock();
 			generate_sawtooth_int(arr, length, min, max, interval);
 			search_time = clock() - start_time;
 			cout << "ВРЕМЯ РАБОТЫ ПИЛООБРАЗНОЙ ЦЕЛОЧИСЛЕННОЙ: " << search_time << endl;
+			cout << "ВЫВЕСТИ ЦЕЛОЧИСЛЕННЫЙ МАССИВ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
+			cin >> var;
+			cout << "\n";
+			if (var == 1)
+				for (int i = 0; i < length; i++)
+					cout << arr[i] << "\n";
 			break;
 		case 5:
 			cout << "ВВВЕДИТЕ НИЖНЮЮ ГРАНИЦУ: ";
@@ -226,10 +275,23 @@ void switch_num(int num, int length, float* arr) {
 			generate_sinuous(arr, length, min, max);
 			search_time = clock() - start_time;
 			cout << "ВРЕМЯ РАБОТЫ ДЛЯ СИНУСОИДНОЙ С ПЛАВАЮЩЕЙ ТОЧКОЙ: " << search_time << endl;
+			cout << "ВЫВЕСТИ МАССИВ С ПЛАВАЮЩЕЙ ТОЧКОЙ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
+			cin >> var;
+			cout << "\n";
+			if (var == 1)
+				for (int i = 0; i < length; i++)
+					cout << arr[i] << "\n";
 			start_time = clock();
+
 			generate_sinuous_int(arr, length, min, max);
 			search_time = clock() - start_time;
 			cout << "ВРЕМЯ РАБОТЫ ДЛЯ СИНУСОИДНОЙ ЦЕЛОЧИСЛЕННОЙ: " << search_time << endl;
+			cout << "ВЫВЕСТИ ЦЕЛОЧИСЛЕННЫЙ МАССИВ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
+			cin >> var;
+			cout << "\n";
+			if (var == 1)
+				for (int i = 0; i < length; i++)
+					cout << arr[i] << "\n";
 			break;
 		case 6:
 			cout << "ВВВЕДИТЕ НИЖНЮЮ ГРАНИЦУ: ";
@@ -242,10 +304,22 @@ void switch_num(int num, int length, float* arr) {
 			generate_stepped(arr, length, min, max, interval);
 			search_time = clock() - start_time;
 			cout << "ВРЕМЯ РАБОТЫ ДЛЯ СТУПЕНЧАТОЙ С ПЛАВАЮЩЕЙ ТОЧКОЙ " << search_time << endl;
+			cout << "ВЫВЕСТИ МАССИВ С ПЛАВАЮЩЕЙ ТОЧКОЙ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
+			cin >> var;
+			cout << "\n";
+			if (var == 1)
+				for (int i = 0; i < length; i++)
+					cout << arr[i] << "\n";
 			start_time = clock();
 			generate_stepped_int(arr, length, min, max, interval);
 			search_time = clock() - start_time;
 			cout << "ВРЕМЯ РАБОТЫ ДЛЯ СТУПЕНЧАТОЙ ЦЕЛОЧИСЛЕННОЙ " << search_time << endl;
+			cout << "ВЫВЕСТИ ЦЕЛОЧИСЛЕННЫЙ МАССИВ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
+			cin >> var;
+			cout << "\n";
+			if (var == 1)
+				for (int i = 0; i < length; i++)
+					cout << arr[i] << "\n";
 			break;
 	}
 
@@ -274,19 +348,10 @@ int main()
 	float* arr = new float[length];
 	switch_num(num, length, arr);
 	if (length < 150 || length > 200) {
-		int var;
-		cout << "ВЫВЕСТИ МАССИВ:\n1.ДА\n2.НЕТ\nОТВЕТ: ";
-		cin >> var;
-		cout << "\n";
-		if (var == 1)
-			for (int i = 0; i < length; i++)
-				cout << arr[i] << "\n";
-		else
-			return 0;
+		return 0;
 	}
 	else {
 		for (int i = 0; i < length; i++) {
-			cout << arr[i] << "\n";
 			fout << arr[i] << "\n";
 		}
 	}
