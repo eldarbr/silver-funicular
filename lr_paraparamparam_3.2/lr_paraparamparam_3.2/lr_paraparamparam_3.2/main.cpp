@@ -79,13 +79,15 @@ int main() {
 	cout << "Введите ключ поиска: ";
 	cin >> key;
 	int pick;
+	int indexForKey;
+	int tmp;
 	cout << endl << "Хотите вставить ключ в массив?\n1.Да\n2.Нет\nВаш выбор: ";
 	cin >> pick;
 	if (pick == 1) {
-		int indexForKey;
 		cout << endl << "Введите индекс, в который вставить ключ поиска: ";
 		cin >> indexForKey;
 		cout << endl;
+		tmp = arr[indexForKey];
 		arr[indexForKey] = key;
 	}
 
