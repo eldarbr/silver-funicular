@@ -11,6 +11,7 @@ int T();
 int B();
 
 
+
 void InsSort(int* arr, int length) {
 	int count = 0;
 	int temp;
@@ -44,10 +45,12 @@ int SLS(int* arr, int length, int key) {
 }
 
 int T(int* arr, int length, int key) {
-	for (int i = 0; i < length; i++)
-		if (arr[i] == key)
-			return i;
+	arr[length] = 2147483647;
+	int i = 0;
+	while (key > arr[i]) i++;
+	if (arr[i] == key) return i;
 	return -1;					// NOT FOUND
+	
 }
 
 int B(int* arr, int length, int key) {
@@ -72,7 +75,7 @@ int main() {
 	cin >> length;
 	cout << endl;
 
-	int* arr = new int[length];
+	int* arr = new int[length + 1];
 	for (int i = 0; i < length; i++) arr[i] = rand();
 
 	int key;
