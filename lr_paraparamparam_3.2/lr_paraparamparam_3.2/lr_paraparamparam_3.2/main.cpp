@@ -24,22 +24,35 @@ void InsSort(int* arr, int length) {
 		}
 }
 
-int BLS(int* arr, int length, int key) {
-	for (int i = 0; i < length; i++)
+int BLS(int* arr, int length, int key, int* comparisons) {
+	*comparisons = 0;
+	for (int i = 0; i < length; i++) {
+		(*comparisons)++;
 		if (arr[i] == key)
 			return i;
+	}
 	return -1;					// NOT FOUND
 }
 
-int SLS(int* arr, int length, int key) {
+int SLS(int* arr, int length, int key, int* comparisons) {
+	*comparisons = 0;
 	int last = arr[length-1];	
 	arr[length - 1] = key;		
 	int i = 0;
-	while (arr[i] != key)
+	while (arr[i] != key) {
+		(*comparisons)++;
 		i++;
+	}
+	(*comparisons)++; // учесть сравнение после выхода из while
 	arr[length - 1] = last;	
-	if (i < length-1 || arr[length - 1] == key)
+	(*comparisons)++; // учесть сравнение соответсвия конечному индексу
+	if (i < length - 1) {
 		return i;
+	}
+	(*comparisons)++; // учесть сравнение последнего элемента с ключем
+	if (arr[length - 1] == key) {
+		return i;
+	}
 	return -1;					// NOT FOUND
 
 }
@@ -95,50 +108,55 @@ int main() {
 	}
 
 	int indexToFound;
+	int comparisons;
 
 	auto startTime = chrono::steady_clock::now();
-	indexToFound = BLS(arr, length, key);
+	indexToFound = BLS(arr, length, key, &comparisons);
 	if (indexToFound == -1) {
 		auto endTime = chrono::steady_clock::now();
 		auto time = chrono::duration_cast<chrono::microseconds>(endTime-startTime);
 		cout << "\nЭлемент не найден в поиске BLS.\n" << "\tАлгоритм выполнился за " << time.count() << " мкс.\n";
+		cout << "Было сделано " << comparisons << " сравнений\n\n";
 	}
 	else {
 		auto endTime = chrono::steady_clock::now();
 		auto time = chrono::duration_cast<chrono::microseconds>(endTime-startTime);
 		cout << "Результат работы алгоритма поиска BLS: " << indexToFound << endl << "\tАлгоритм выполнился за " << time.count() << " мкс.\n";
+		cout << "Было сделано " << comparisons << " сравнений\n\n";
 	}
 
 	startTime = chrono::steady_clock::now();
-	indexToFound = SLS(arr, length, key);
+	indexToFound = SLS(arr, length, key, &comparisons);
 	if (indexToFound == -1) {
 		auto endTime = chrono::steady_clock::now();
 		auto time = chrono::duration_cast<chrono::microseconds>(endTime-startTime);
 		cout << "Элемент не найден в поиске SLS.\n" << "\tАлгоритм выполнился за " << time.count() << " мкс.\n";
+		cout << "Было сделано " << comparisons << " сравнений\n\n";
 	}
 	else {
 		auto endTime = chrono::steady_clock::now();
 		auto time = chrono::duration_cast<chrono::microseconds>(endTime-startTime);
 		cout << "Результат работы алгоритма поиска SLS: " << indexToFound << endl << "\tАлгоритм выполнился за " << time.count() << " мкс.\n";
+		cout << "Было сделано " << comparisons << " сравнений\n\n";
 	}
 
 	startTime = chrono::steady_clock::now();
 	InsSort(arr, length);		
 	auto endTime = chrono::steady_clock::now();	
 	auto time = chrono::duration_cast<chrono::microseconds>(endTime-startTime);
-	cout << "Время сортировки: " << time.count() << " мкс.\n";
+	cout << "\nВремя сортировки: " << time.count() << " мкс.\n\n";
 
 	startTime = chrono::steady_clock::now();
 	indexToFound = T(arr, length, key);
 	if (indexToFound == -1) {
 		auto endTime = chrono::steady_clock::now();
 		time = chrono::duration_cast<chrono::microseconds>(endTime-startTime);
-		cout << "Элемент не найден в поиске T.\n" << "\tАлгоритм выполнился за " << time.count() << " мкс.\n";
+		cout << "\nЭлемент не найден в поиске T.\n" << "\tАлгоритм выполнился за " << time.count() << " мкс.\n";
 	}
 	else {
 		auto endTime = chrono::steady_clock::now();
 		time = chrono::duration_cast<chrono::microseconds>(endTime-startTime);
-		cout << "Результат работы алгоритма поиска T: " << indexToFound << endl << "\tАлгоритм выполнился за " << time.count() << " мкс.\n";
+		cout << "\nРезультат работы алгоритма поиска T: " << indexToFound << endl << "\tАлгоритм выполнился за " << time.count() << " мкс.\n";
 	}
 
 	startTime = chrono::steady_clock::now();
@@ -146,11 +164,11 @@ int main() {
 	if (indexToFound == -1) {
 		auto endTime = chrono::steady_clock::now();
 		time = chrono::duration_cast<chrono::microseconds>(endTime-startTime);
-		cout << "Элемент не найден в поиске B.\n" << "\tАлгоритм выполнился за " << time.count() << " мкс.\n";
+		cout << "\nЭлемент не найден в поиске B.\n" << "\tАлгоритм выполнился за " << time.count() << " мкс.\n";
 	}
 	else {
 		auto endTime = chrono::steady_clock::now();
 		time = chrono::duration_cast<chrono::microseconds>(endTime-startTime);
-		cout << "Результат работы алгоритма поиска B: " << indexToFound << endl << "\tАлгоритм выполнился за " << time.count() << " мкс.\n";
+		cout << "\nРезультат работы алгоритма поиска B: " << indexToFound << endl << "\tАлгоритм выполнился за " << time.count() << " мкс.\n";
 	}
 }
