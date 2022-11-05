@@ -34,11 +34,11 @@ void printArrayWithColor(int* arr, int n, int k, int j) {
 	cout << endl;
 }
 
-void chooseSort(int* arr, int n, int nOS, int nOC) {
+void chooseSort(int* arr, int n, int numOfSwaps, int numOfComparisons) {
 	int i, j, smallest, temp;
 	int choose;
-	nOS = 0;
-	nOC = 0;
+	numOfSwaps = 0;
+	numOfComparisons = 0;
 	cout << "Выводить сортировку построчно?(по умолчанию Нет)\n1.Да\n2.Нет\nВаш выбор: ";
 	cin >> choose;
 	switch (choose) {
@@ -48,13 +48,14 @@ void chooseSort(int* arr, int n, int nOS, int nOC) {
 			for (j = i + 1; j < n; j++)
 				if (arr[j] < arr[smallest]) {
 					smallest = j;
-					nOC++;
+					numOfComparisons++;
 				}
+				else numOfComparisons++;
 			if (i != smallest) {
 				temp = arr[i];
 				arr[i] = arr[smallest];
 				arr[smallest] = temp;
-				nOS++;
+				numOfSwaps++;
 			}
 			printArrayWithColor(arr, n, smallest, i);
 		}
@@ -65,26 +66,27 @@ void chooseSort(int* arr, int n, int nOS, int nOC) {
 			for (j = i + 1; j < n; j++)
 				if (arr[j] < arr[smallest]) {
 					smallest = j;
-					nOC++;
+					numOfComparisons++;
 				}
+				else numOfComparisons++;
 			if (i != smallest) {
 				temp = arr[i];
 				arr[i] = arr[smallest];
 				arr[smallest] = temp;
-				nOS++;
+				numOfSwaps++;
 			}
 		}
 		break;
 	}
-	cout << normal <<  "\nКоличество сравнений: " << nOC
-		<< "\nКоличество пересылок: " << nOS << "\n";
+	cout << normal <<  "\nКоличество сравнений: " << numOfComparisons
+		<< "\nКоличество пересылок: " << numOfSwaps << "\n";
 }
 
-void ShellSort(int* arr, int n, int nOS, int nOC) {
+void ShellSort(int* arr, int n, int numOfSwaps, int numOfComparisons) {
 	int i, j, step, temp;
 	int choose;
-	nOC = 0;
-	nOS = 0;
+	numOfComparisons = 0;
+	numOfSwaps = 0;
 	cout << "Выводить сортировку построчно?(по умолчанию Нет)\n1.Да\n2.Нет\nВаш выбор: ";
 	cin >> choose;
 	switch (choose) {
@@ -95,12 +97,17 @@ void ShellSort(int* arr, int n, int nOS, int nOC) {
 				for (j = i; j >= step; j -= step) {
 					if (temp < arr[j - step]) {
 						arr[j] = arr[j - step];
-						nOC++;
+						numOfSwaps++;
+						numOfComparisons++;
 					}
-					else break;
+					else {
+						numOfComparisons++;
+						break;
+					}
 				}
 				arr[j] = temp;
-				nOS++;
+				if(i!=j)
+					numOfSwaps++;
 				printArrayWithColor(arr, n, i, j);
 			}
 		break;
@@ -111,22 +118,25 @@ void ShellSort(int* arr, int n, int nOS, int nOC) {
 				for (j = i; j >= step; j -= step) {
 					if (temp < arr[j - step]) {
 						arr[j] = arr[j - step];
-						nOC++;
+						numOfComparisons++;
 					}
-					else break;
+					else {
+						numOfComparisons++;
+						break;
+					}
 				}
 				arr[j] = temp;
-				nOS++;
+				numOfSwaps++;
 			}
 		break;
 	}
-	cout << normal << "\nКоличество сравнений: " << nOC
-		<< "\nКоличество пересылок: " << nOS << "\n";
+	cout << normal << "\nКоличество сравнений: " << numOfComparisons
+		<< "\nКоличество пересылок: " << numOfSwaps << "\n";
 }
 
-void timeForSort(void (*function)(int* arr, int n, int nOS, int nOC), int* arr, int n, int nOS, int nOC) {
+void timeForSort(void (*function)(int* arr, int n, int numOfSwaps, int numOfComparisons), int* arr, int n, int numOfSwaps, int numOfComparisons) {
 	auto startTime = chrono::steady_clock::now();
-	function(arr, n, nOS, nOC);
+	function(arr, n, numOfSwaps, numOfComparisons);
 	auto endTime = chrono::steady_clock::now();
 	auto time = chrono::duration_cast<chrono::microseconds>(endTime - startTime);
 	cout << "\nВремя на сортировку (в мск): " << time.count() << "\n\n";
@@ -146,7 +156,7 @@ void timeForSort(void (*function)(int* arr, int n, int nOS, int nOC), int* arr, 
 int main()
 {
 	setlocale(LC_ALL, "rus");
-	int numOfSwap = 0, numOfCmp = 0;
+	int numOfSwaps = 0, numOfComparisons = 0;
 	int n;
 	cout << "Введите количество элементов массива: ";
 	cin >> n;
@@ -200,12 +210,12 @@ int main()
 
 	cout << "\n\n\t\tСортировка выбором:\n\n";
 
-	void (*fun)(int* arr, int n, int nOS, int nOC);
+	void (*fun)(int* arr, int n, int numOfSwaps, int numOfComparisons);
 	fun = chooseSort;
-	timeForSort(fun, arr1, n, numOfSwap, numOfCmp);
+	timeForSort(fun, arr1, n, numOfSwaps, numOfComparisons);
 
 	cout << "\n\n\t\tСортировка Шелла:\n\n";
 	fun = ShellSort;
-	timeForSort(fun, arr2, n, numOfSwap, numOfCmp);
+	timeForSort(fun, arr2, n, numOfSwaps, numOfComparisons);
 
 }
