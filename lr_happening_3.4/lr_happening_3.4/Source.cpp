@@ -8,19 +8,29 @@ const int n = 5;
 
 struct elem { int data; elem* next; };
 
+struct List { elem* begin; elem* end; };
+
 void searchInList() {
 
 }
 
-void recordIntoList(elem*begin, elem*last, elem*list, int a[]) {
-	for (int i = 0; i < n; i++) {
-		last = new elem;
-	}
+void recordIntoList(List* list, int *a[], int n) {
+	List *ptr = new List;
+	if (!list->begin)
+		list->begin = ptr;
+	else
+		list->end->next = 
+
 }
 
 int main() {
 	setlocale(LC_ALL, "rus");
-	int A[n] = { 1,4,6,8,9 };
+	int n;
+	cout << "¬ведите n: ";
+	cin >> n;
+	cout << endl << "¬ведите массив: ";
+	int* arr = new int[n];
+	cout << endl;
 	elem* begin = NULL;
 	elem* last = NULL;
 	elem* list = NULL;
