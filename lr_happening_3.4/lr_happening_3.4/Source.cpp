@@ -1,6 +1,7 @@
 // Однонаправленный кольцевой целочисленный список
 
 #include <iostream>
+#include "Source.h"
 
 using namespace std;
 
@@ -141,7 +142,7 @@ void menuRealisation() {
 	int index;
 	Element* now = list->first;
 	do {
-		if (now != NULL) {
+		if (now != NULL) {		// список задан
 			system("cls");
 			cout << "\tТекущий элемент: " << red << now->data << normal << "; с индексом: " << red << now->index << "\n\n" << normal;
 			cout << "\tЧто вы хотите сделать?\n";
@@ -180,7 +181,7 @@ void menuRealisation() {
 				now = NULL;
 			}
 		}
-		else {
+		else {					// список не задан
 			system("cls");
 			cout << "\tЧто вы хотите сделать?\n";
 			cout << "1. Создать список\n";
