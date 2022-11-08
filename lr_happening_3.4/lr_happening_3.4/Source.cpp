@@ -42,13 +42,40 @@ char normal[] = "\x1b[39;49m";
 
 void printMenu() {
 	system("cls");
-	cout << redBold << "Что вы хотите сделать?\n";
+	cout << "Что вы хотите сделать?\n";
 	cout << "1. Перейти на следующий элемент в списке\n";
 	cout << "2. Выйти из программы\n";
 	cout << ">" << normal;
 }
 
+int getVariant() {
+	int variant;
+	cin >> variant;
 
+	while (variant != 1 && variant != 2) {
+		cout << "Некорректное значение. Введите снова: ";
+		cin >> variant;
+	}
+	return variant;
+}
+
+void menuRealisation(Element* now) {
+	int variant;
+
+	do {
+		cout << redBold << "Текущий элемент: " << now->data << "\n\n\n";
+		printMenu();
+		variant = getVariant();
+		switch (variant) {
+		case 1:
+			now->next;
+			break;
+		}
+		if (variant != 2) {
+			system("pause");
+		} 
+	} while (variant != 2);
+}
 
 int main() {
 	setlocale(LC_ALL, "rus");
@@ -61,6 +88,6 @@ int main() {
 	cout << endl;*/
 	Element* begin = NULL;
 	Element* last = NULL;
-	
-	printMenu();
+	recordIntoList(A, n, begin, last);
+	menuRealisation(begin);
 }
