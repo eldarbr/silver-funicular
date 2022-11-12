@@ -1,7 +1,6 @@
 // Однонаправленный кольцевой целочисленный список
 
 #include <iostream>
-#include "Source.h"
 
 using namespace std;
 
@@ -62,7 +61,7 @@ List* recordIntoList(int a[], int n, List* list) {
 int findIndexInList(Element* now) {
 	int key;
 	int counter = 0;
-	cout << "\nВведите ключ поиска\n>";
+	cout << "\nВведите ключ поиска\n> ";
 	cin >> key;
 	while (now && now->data != key && counter < 5) {
 		now = now->next;
@@ -80,7 +79,7 @@ int findIndexInList(Element* now) {
 //******************************************************************//
 List* push(List* list) {
 	int number;
-	cout << "Введите число для вставки:\n>";
+	cout << "Введите число для вставки:\n> ";
 	cin >> number;
 	Element* now = new Element;
 	now->data = number;
@@ -96,7 +95,7 @@ List* push(List* list) {
 List* deleteByIndex(List* list) {
 	Element* now = list->first;
 	int number;
-	cout << "Введите номер элемента для удаления:\n>";
+	cout << "Введите номер элемента для удаления:\n> ";
 	cin >> number;
 	if (number > list->last->index) {
 		cout << red << "\nЭлемента под таким номером не существует.\n" << normal;
@@ -144,15 +143,15 @@ void menuRealisation() {
 	do {
 		if (now != NULL) {		// список задан
 			system("cls");
-			cout << "\tТекущий элемент: " << red << now->data << normal << "; с индексом: " << red << now->index << "\n\n" << normal;
-			cout << "\tЧто вы хотите сделать?\n";
-			cout << "1. Перейти на следующий элемент в списке\n";
-			cout << "2. Найти в списке элемент с заданным значением\n";
-			cout << "3. Вставить элемент в конец списка\n";
-			cout << "4. Удалить элемент из позиции списка с заданным  номером\n";
-			cout << "5. Удалить список\n";
-			cout << "6. Выход из программы\n";
-			cout << ">";
+			cout << "\tТекущий элемент: " << red << now->data << normal << "; с индексом: " << red << now->index << "\n\n" << normal
+			 << "\tЧто вы хотите сделать?\n"
+			 << "1. Перейти на следующий элемент в списке\n"
+			 << "2. Найти в списке элемент с заданным значением\n"
+			 << "3. Вставить элемент в конец списка\n"
+			 << "4. Удалить элемент из позиции списка с заданным  номером\n"
+			 << "5. Удалить список\n"
+			 << "6. Выход из программы\n"
+			 << "> ";
 			variant = getVariant();
 			switch (variant) {
 			case 1:
@@ -183,21 +182,22 @@ void menuRealisation() {
 		}
 		else {					// список не задан
 			system("cls");
-			cout << "\tЧто вы хотите сделать?\n";
-			cout << "1. Создать список\n";
-			cout << "2. Выход из программы\n";
-			cout << ">";
+			cout << "\tЧто вы хотите сделать?\n"
+			 << "1. Создать список\n"
+			 << "2. Выход из программы\n"
+			 << "> ";
 			variant = getVariant();
 			switch (variant)
 			{
 			case 1:
 				int n;
-				cout << "\nВведите количество элементов списка\n>";
+				cout << "\nВведите количество элементов списка\n> ";
 				cin >> n;
 				int* arr = new int[n];
-				cout << "\nВведите " << red << n << normal << " целочисленных чисел\n>";
+				cout << "\nВведите " << red << n << normal << " целочисленных чисел\n> ";
 				for (int i = 0; i < n; i++) cin >> arr[i];
 				list = recordIntoList(arr, n, list);
+				break;
 			}
 			now = list->first;
 		}
