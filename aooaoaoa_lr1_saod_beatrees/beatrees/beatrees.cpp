@@ -102,7 +102,7 @@ Node* AddNode(int data, Node* Tree) {
     return Tree;
 }
 
-void SearchInTree(Node* Tree, int key) {
+Node* SearchInTree(Node* Tree, int key) {
     bool found = 0;
     Node* now = Tree;
     while (now && !found) {
@@ -110,16 +110,52 @@ void SearchInTree(Node* Tree, int key) {
         else if (key > now->data) now = now->right;
         else now = now->left;
     }
-    if (found) cout << "Узел с ключом " << key << " существует!\n";
+    if (found) {
+        cout << "Узел с ключом " << key << " существует!\n";
+        return now;
+    }
     else cout << "Узла с ключом " << key << " НЕ существует!\n";
+    return NULL;
 }
 
-void DelTree(Node* Tree) {
-    if (Tree != NULL) {
-        DelTree(Tree->right);
-        DelTree(Tree->left);
-        delete Tree;
+Node *DelTree(Node* Tree) {
+    Node* newTree = Tree;
+    if (newTree != NULL) {
+        DelTree(newTree->right);
+        DelTree(newTree->left);
+        newTree=NULL;
     }
+    return newTree;
+}
+
+Node* FindMin(Node* Tree) {
+    Node* minNode = new Node;
+    while (Tree->left) {
+        Tree = Tree->left;
+    }
+    return Tree;
+}
+
+Node* DelNode(Node* Tree, int key) {
+    if (Tree == NULL) return NULL;
+    if (Tree->data < key) {
+        Tree->right = DelNode(Tree->right,key);
+    }
+    else if (Tree->data > key) {
+        Tree->left = DelNode(Tree->left, key);
+    }
+    else if (Tree->left != NULL && NULL != Tree->right) {
+        Tree->data = FindMin(Tree->right)->data;
+        Tree->right = DelNode(Tree->right, Tree->data);
+    }
+    else {
+        if (Tree->left != NULL)
+            Tree = Tree->left;
+        else if (Tree->right != NULL)
+            Tree = Tree->right;
+        else Tree = NULL;  
+    }
+    return Tree;
 }
 
 int FindHeight(Node* Tree) {
@@ -142,7 +178,7 @@ int NumOfNodes(Node* Tree) {
 
 int DopFun(Node* Tree) {
     if (Tree != NULL) {
-        return Tree->data % 2 == 1 + DopFun(Tree->left) + DopFun(Tree->right);
+        return int(Tree->data % 2 == 1 && Tree->left!=NULL && Tree->right!=NULL) + DopFun(Tree->left) + DopFun(Tree->right);
     }
     else {
         return 0;
@@ -222,6 +258,13 @@ void MenuRealization() {
                 Tree = AddNode(unit, Tree);
                 break;
             case 3:     //Доделать удаление узла
+                cout << "Введите ключ для удаления:\n> ";
+                int kekey;
+                cin >> kekey;
+                Tree = DelNode(Tree, kekey);
+                PrintTree(Tree, NULL, false);
+                cout << "\nЧтобы вернуться в меню, нажмите любую кнопку\n";
+                system("pause");
                 break;
             case 4:
                 cout << "\nУзел с каким полем данных вы хотите найти?\n> ";
@@ -247,7 +290,10 @@ void MenuRealization() {
                 system("pause");
                 break;
             case 8:
-                DelTree(Tree);
+                Tree = DelTree(Tree);
+                if (Tree == NULL) {
+                    cout << "hehehehehe\n";
+                }
                 break;
             }
         }
