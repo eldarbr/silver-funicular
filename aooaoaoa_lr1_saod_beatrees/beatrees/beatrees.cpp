@@ -8,7 +8,9 @@ using namespace std;
 char red[] = "\x1b[31;1m";
 char normal[] = "\x1b[39;49m";
 
-struct Node { int data; Node* left; Node* right; };
+struct Node {
+    int data; Node* left; Node* right; 
+};
 
 struct Trunk
 {
@@ -22,24 +24,24 @@ struct Trunk
     }
 };
 
-void showTrunks(Trunk* p)
+void ShowTrunks(Trunk* p)
 {
     if (p == nullptr) {
         return;
     }
-    showTrunks(p->prev);
+    ShowTrunks(p->prev);
     cout << p->str;
 }
 
 
-void printTree(Node* root, Trunk* prev, bool isLeft)
+void PrintTree(Node* root, Trunk* prev, bool isLeft)
 {
     if (root == NULL) {
         return;
     }
     string prev_str = "    ";
     Trunk* trunk = new Trunk(prev, prev_str);
-    printTree(root->right, trunk, true);
+    PrintTree(root->right, trunk, true);
     if (!prev) {
         trunk->str = "———";
     }
@@ -52,27 +54,27 @@ void printTree(Node* root, Trunk* prev, bool isLeft)
         trunk->str = "`———";
         prev->str = prev_str;
     }
-    showTrunks(trunk);
+    ShowTrunks(trunk);
     cout << " " << root->data << endl;
     if (prev) {
         prev->str = prev_str;
     }
     trunk->str = "   |";
 
-    printTree(root->left, trunk, false);
+    PrintTree(root->left, trunk, false);
 }
 
 
-void printTree(Node* p, int level) {
+void PrintTree(Node* p, int level) {
     if (p) {
-        printTree(p->left, level + 1);
+        PrintTree(p->left, level + 1);
         for (int i = 0; i < level; i++) cout << "   ";
         cout << p->data << endl;
-        printTree(p->right, level + 1);
+        PrintTree(p->right, level + 1);
     }
 }
 
-Node* addNode(int data, Node* Tree) {
+Node* AddNode(int data, Node* Tree) {
     if (Tree == NULL) {
         Tree = new Node;
         Tree->data = data;
@@ -80,7 +82,7 @@ Node* addNode(int data, Node* Tree) {
         Tree->right = NULL;
     }
     if (data < Tree->data) {
-        if (Tree->left != NULL) addNode(data, Tree->left);
+        if (Tree->left != NULL) AddNode(data, Tree->left);
         else {
             Tree->left = new Node;
             Tree->left->data = data;
@@ -89,7 +91,7 @@ Node* addNode(int data, Node* Tree) {
         }
     }
     if (data > Tree->data) {
-        if (Tree->right != NULL) addNode(data, Tree->right);
+        if (Tree->right != NULL) AddNode(data, Tree->right);
         else {
             Tree->right = new Node;
             Tree->right->data = data;
@@ -100,7 +102,7 @@ Node* addNode(int data, Node* Tree) {
     return Tree;
 }
 
-void searchInTree(Node* Tree, int key) {
+void SearchInTree(Node* Tree, int key) {
     bool found = 0;
     Node* now = Tree;
     while (now && !found) {
@@ -112,22 +114,43 @@ void searchInTree(Node* Tree, int key) {
     else cout << "Узла с ключом " << key << " НЕ существует!\n";
 }
 
-void delTree(Node* Tree) {
+void DelTree(Node* Tree) {
     if (Tree != NULL) {
-        delTree(Tree->right);
-        delTree(Tree->left);
+        DelTree(Tree->right);
+        DelTree(Tree->left);
         delete Tree;
     }
 }
 
-int findHeight(Node* Tree) { return Tree!=NULL? 1 + max(findHeight(Tree->left), findHeight(Tree->right)):0; }
+int FindHeight(Node* Tree) {
+    if (Tree != NULL) {
+        return 1 + max(FindHeight(Tree->left), FindHeight(Tree->right));
+    }
+    else {
+        return 0;
+    }
+}
 
-int numOfNodes(Node* Tree) { return Tree != NULL ? 1 + numOfNodes(Tree->left) + numOfNodes(Tree->right) : 0; }
+int NumOfNodes(Node* Tree) {
+    if (Tree != NULL) {
+        return 1 + NumOfNodes(Tree->left) + NumOfNodes(Tree->right);
+    }
+    else {
+        return 0;
+    }
+}
 
-int dopFun(Node* Tree) { return Tree!=NULL? Tree->data % 2 == 1 + dopFun(Tree->left) + dopFun(Tree->right):0; }
+int DopFun(Node* Tree) {
+    if (Tree != NULL) {
+        return Tree->data % 2 == 1 + DopFun(Tree->left) + DopFun(Tree->right);
+    }
+    else {
+        return 0;
+    }
+}
 
 
-int getVariant() {
+int GetVariant() {
     int variant;
     cin >> variant;
 
@@ -138,7 +161,7 @@ int getVariant() {
     return variant;
 }
 
-void menuRealization() {
+void MenuRealization() {
     setlocale(LC_ALL, "rus");
     Node* Tree = new Node;
     Tree = NULL;
@@ -151,7 +174,7 @@ void menuRealization() {
                 << "1. Создать дерево из n элементов\n"
                 << "2. Выйти из программы\n"
                 << "> ";
-            variant = getVariant();
+            variant = GetVariant();
             switch (variant)
             {
             case 1:
@@ -162,7 +185,7 @@ void menuRealization() {
                 cout << "\nВведите " << red << n << normal << " целочисленных чисел\n> ";
                 for (int i = 0; i < n; i++) {
                     cin >> arr[i];
-                    Tree = addNode(arr[i], Tree);
+                    Tree = AddNode(arr[i], Tree);
                 }
                 break;
             }
@@ -171,7 +194,7 @@ void menuRealization() {
             bool treeView = 0;
             system("cls");
             cout << "\tДерево создано!\n";
-            printTree(Tree, NULL, false);
+            PrintTree(Tree, NULL, false);
 
             cout << "\nЧто вы хотите сделать?\n"
                 << "1. Вывести дерево на экран\n"
@@ -184,11 +207,11 @@ void menuRealization() {
                 << "8. Удалить дерево\n"
                 << "9. Выйти из программы\n"
                 << "> ";
-            variant = getVariant();
+            variant = GetVariant();
             switch (variant)
             {
             case 1:
-                printTree(Tree, NULL, false);
+                PrintTree(Tree, NULL, false);
                 cout << "\nЧтобы вернуться в меню, нажмите любую кнопку\n";
                 system("pause");
                 break;
@@ -196,7 +219,7 @@ void menuRealization() {
                 cout << "\nВведите новый узел\n> ";
                 int unit;
                 cin >> unit;
-                Tree = addNode(unit, Tree);
+                Tree = AddNode(unit, Tree);
                 break;
             case 3:     //Доделать удаление узла
                 break;
@@ -204,27 +227,27 @@ void menuRealization() {
                 cout << "\nУзел с каким полем данных вы хотите найти?\n> ";
                 int key;
                 cin >> key;
-                searchInTree(Tree, key);
+                SearchInTree(Tree, key);
                 cout << "\nЧтобы вернуться в меню, нажмите любую кнопку\n";
                 system("pause");
                 break;
             case 5:
-                cout << "\nВысота дерева: " << findHeight(Tree);
+                cout << "\nВысота дерева: " << FindHeight(Tree);
                 cout << "\nЧтобы вернуться в меню, нажмите любую кнопку\n";
                 system("pause");
                 break;
             case 6:
-                cout << "\nКоличество узлов в дереве: " << numOfNodes(Tree);
+                cout << "\nКоличество узлов в дереве: " << NumOfNodes(Tree);
                 cout << "\nЧтобы вернуться в меню, нажмите любую кнопку\n";
                 system("pause");
                 break;
             case 7:
-                cout << "\nKоличество нечетных чисел в узлах, имеющих ровно два поддерева: " << dopFun(Tree);
+                cout << "\nKоличество нечетных чисел в узлах, имеющих ровно два поддерева: " << DopFun(Tree);
                 cout << "\nЧтобы вернуться в меню, нажмите любую кнопку\n";
                 system("pause");
                 break;
             case 8:
-                delTree(Tree);
+                DelTree(Tree);
                 break;
             }
         }
@@ -234,4 +257,6 @@ void menuRealization() {
 
 
 
-int main(){  menuRealization(); }
+int main(){ 
+    MenuRealization(); 
+}
