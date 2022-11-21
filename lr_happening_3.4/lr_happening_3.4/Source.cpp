@@ -33,7 +33,7 @@ int getVariant() {
 //******************************************************************//
 //						ЗАПИСЬ В СПИСОК							    //
 //******************************************************************//
-List* recordIntoList(int a[], int n, List* list) {
+List* RecordIntoList(int a[], int n, List* list) {
 	list->first = NULL;
 	list->last = NULL;
 	Element* now = NULL;
@@ -65,7 +65,7 @@ List* recordIntoList(int a[], int n, List* list) {
 //*****************************************************************//
 //				ПОИСК ИНДЕКСА ЭЛЕМЕНТА В СПИСКЕ					   //
 //*****************************************************************//
-int findIndexInList(Element* now) {
+int FindIndexInList(Element* now) {
 	int key;
 	int counter = 0;
 	cout << "\nВведите ключ поиска\n> ";
@@ -114,7 +114,8 @@ List* deleteByIndex(List* list) {
 	}
 	else if (list->last->index == number) {	//  удаляется последний элемент
 		if (list->first == list->last) {	//  первый элемент совпадает с последним
-			list->first = now->next;
+			//list->first = now->next;
+			return NULL;
 		}
 		while (now->next != list->last) now = now->next;
 		now->next = list->first;
@@ -139,7 +140,7 @@ List* deleteByIndex(List* list) {
 //******************************************************************//
 //						РЕАЛИЗАЦИЯ МЕНЮ							    //
 //******************************************************************//
-void menuRealisation() {
+void MenuRealisation() {
 	setlocale(LC_ALL, "rus");
 	List* list = new List;
 	list->first = NULL;
@@ -165,7 +166,7 @@ void menuRealisation() {
 				now = now->next;
 				break;
 			case 2:
-				index = findIndexInList(now);
+				index = FindIndexInList(now);
 				if (index == -1)
 					cout << red << "\n\tПодходящий элемент не найден в списке.\n" << normal;
 				else
@@ -203,7 +204,7 @@ void menuRealisation() {
 				int* arr = new int[n];
 				cout << "\nВведите " << red << n << normal << " целочисленных чисел\n> ";
 				for (int i = 0; i < n; i++) cin >> arr[i];
-				list = recordIntoList(arr, n, list);
+				list = RecordIntoList(arr, n, list);
 				break;
 			}
 			now = list->first;
@@ -212,5 +213,5 @@ void menuRealisation() {
 }
 
 int main() {
-	menuRealisation();
+	MenuRealisation();
 }
