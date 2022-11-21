@@ -4,36 +4,26 @@
 
 using namespace std;
 
-
-struct Element { 
-	int data; 
-	int index; 
+// element
+struct Element {
+	int data;
+	int index;
 	Element* next;
 };
 
-struct List { 
-	Element* first; 
-	Element* last; 
+// list
+struct List {
+	Element* first;
+	Element* last;
 };
 
-char red[] = "\x1b[31;1m";
-char normal[] = "\x1b[39;49m";
+char redColor[] = "\x1b[31;1m";			// red color for console interface
+char supremeColor[] = "\x1b[39;49m";	// white color for console interface
 
-int getVariant() {
-	int variant;
-	cin >> variant;
 
-	while (variant != 1 && variant != 2 && variant!= 3 && variant !=4 && variant !=5 && variant !=6) {
-		cout << "Некорректное значение. Введите снова: ";
-		cin >> variant;
-	}
-	return variant;
-}
-
-//******************************************************************//
-//						ЗАПИСЬ В СПИСОК							    //
-//******************************************************************//
-List* RecordIntoList(int a[], int n, List* list) {
+// wr*te *nto l*st some sh*t sheeeeeeeeeeeeeeeesh
+// create good list
+List* CreateGList(int a[], int n, List* list) {
 	list->first = NULL;
 	list->last = NULL;
 	Element* now = NULL;
@@ -61,61 +51,56 @@ List* RecordIntoList(int a[], int n, List* list) {
 	return list;
 }
 
-
-//*****************************************************************//
-//				ПОИСК ИНДЕКСА ЭЛЕМЕНТА В СПИСКЕ					   //
-//*****************************************************************//
-int FindIndexInList(Element* now) {
-	int key;
+// поиск индекса элемента в списке
+int FindByValue(List* list, int value) {
 	int counter = 0;
-	cout << "\nВведите ключ поиска\n> ";
-	cin >> key;
-	while (now && now->data != key && counter < 5) {
-		now = now->next;
+	Element* current = list->first;
+	while (current && current->data != value && counter <= list->last->index) {
+		current = current->next;
 		counter++;
 	}
-	if (counter == 5) {
+	if (counter == list->last->index + 1) {
 		return -1;
 	}
-	return now->index;
+	else {
+		return current->index;
+	}
 }
 
-
-//******************************************************************//
-//					ВСТАВКА В КОНЕЦ СПИСКА						   //
-//******************************************************************//
-List* push(List* list) {
-	int number;
-	cout << "Введите число для вставки:\n> ";
-	cin >> number;
+// вставка в конец списка
+List* InsertToEnd(List* list, int data) {
 	Element* now = new Element;
-	now->data = number;
+	now->data = data;
 	now->index = list->last->index + 1;
 	list->last->next = now;
 	now->next = list->first;
 	return list;
 }
 
-//******************************************************************//
-//				УДАЛЕНИЕ ЭЛЕМЕНТА ПОД ЗАДАННЫМ НОМЕРОМ				//
-//******************************************************************//
-List* deleteByIndex(List* list) {
+// удаление элемента по индексу
+List* DeleteFromList(List* list, int index) {
 	Element* now = list->first;
-	int number;
-	cout << "Введите номер элемента для удаления:\n> ";
-	cin >> number;
-	if (number > list->last->index) {
-		cout << red << "\nЭлемента под таким номером не существует.\n" << normal;
-		system("cls");
+	
+	if (list->first == NULL) return list;
+	if (list->first == list->last && list->first->index == index) {
+		list->first = NULL;
+		list->last = NULL;
+		return list;//  список пуст
 	}
-	if (list->first == NULL) return NULL;		//  список пуст
-	if (list->first->index == number) {		//  удаляется первый элемент
+	if (list->first->index == index) {    //  удаляется первый элемент
 		list->first = now->next;
+		list->last->next = now->next;
+		now = list->first;
+		for (int j = 0; j <= list->last->index; j++) {
+			now->index = now->index--;
+			now = now->next;
+		}
 	}
-	else if (list->last->index == number) {	//  удаляется последний элемент
-		if (list->first == list->last) {	//  первый элемент совпадает с последним
-			//list->first = now->next;
-			return NULL;
+	else if (list->last->index == index) {  //  удаляется последний элемент
+		if (list->first == list->last) {  //  первый элемент совпадает с последним
+		  //list->first = now->next;
+			delete list->first;
+			return list;
 		}
 		while (now->next != list->last) now = now->next;
 		now->next = list->first;
@@ -124,7 +109,7 @@ List* deleteByIndex(List* list) {
 	}
 	else {
 		int i = 0;
-		while (now->next->index != number) {
+		while (now->next->index != index) {
 			now = now->next;
 			i++;
 		}
@@ -137,64 +122,123 @@ List* deleteByIndex(List* list) {
 	return list;
 }
 
-//******************************************************************//
-//						РЕАЛИЗАЦИЯ МЕНЮ							    //
-//******************************************************************//
-void MenuRealisation() {
+
+// ввод для интерфейса пользователя
+int ConsoleInterfaceInput() {
+	int variant;
+	cin >> variant;
+
+	while (variant != 1 && variant != 2 && variant != 3 && variant != 4 && variant != 5 && variant != 6) {
+		cout << "Некорректное значение. Введите снова: ";
+		cin >> variant;
+	}
+	return variant;
+}
+
+// ввод индекса для удаления
+List* ConsoleInterfaceDelete(List* list) {
+	int index;
+	cout << "Введите индекс элемента для удаления:\n> ";
+	cin >> index;
+	if (index > list->last->index) {
+		cout << redColor << "\nЭлемента под таким индексом не существует.\n" << supremeColor;
+		system("cls");
+	}
+	return DeleteFromList(list, index);
+}
+
+// ввод для вставки в конец списка
+List* ConsoleInterfaceInsertToEnd(List* list) {
+	int data;
+	cout << "Введите число для вставки:\n> ";
+	cin >> data;
+	return InsertToEnd(list, data);
+}
+
+// ввод для поиска по значению
+int ConsoleInterfaceFindByValue(List* list) {
+	int value;
+	cout << "\nВведите ключ поиска\n> ";
+	cin >> value;
+	return FindByValue(list, value);
+}
+
+// вывод списка
+void ConsoleInterfaceOutputList(List* list) {
+	Element* current = list->first;
+	cout << "index:\t";
+	do {
+		cout << current->index << "\t";
+		current = current->next;
+	} while (current->index != list->first->index);
+	cout << "\nvalue:\t";
+	current = list->first;
+	do {
+		cout << current->data << "\t";
+		current = current->next;
+	} while (current->index != list->first->index);
+	cout << "\n";
+}
+
+// интерфейс для пользователя
+void ConsoleInterface() {
 	setlocale(LC_ALL, "rus");
 	List* list = new List;
 	list->first = NULL;
 	list->last = NULL;
 	int variant;
 	int index;
-	Element* now = list->first;
 	do {
-		if (now != NULL) {		// список задан
+		if (list->first != NULL) {		// список задан
 			system("cls");
-			cout << "\tТекущий элемент: " << red << now->data << normal << "; с индексом: " << red << now->index << "\n\n" << normal
-			 << "\tЧто вы хотите сделать?\n"
-			 << "1. Перейти на следующий элемент в списке\n"
-			 << "2. Найти в списке элемент с заданным значением\n"
-			 << "3. Вставить элемент в конец списка\n"
-			 << "4. Удалить элемент из позиции списка с заданным  номером\n"
-			 << "5. Удалить список\n"
-			 << "6. Выход из программы\n"
-			 << "> ";
-			variant = getVariant();
+			ConsoleInterfaceOutputList(list);
+				cout
+				<< "\tЧто вы хотите сделать?\n"
+				<< "1. Вывести весь список на экран\n"
+				<< "2. Найти в списке элемент с заданным значением\n"
+				<< "3. Вставить элемент в конец списка\n"
+				<< "4. Удалить элемент из позиции списка с заданным индексом\n"
+				<< "5. Удалить список\n"
+				<< "6. Выход из программы\n"
+				<< "> ";
+			variant = ConsoleInterfaceInput();
 			switch (variant) {
 			case 1:
-				now = now->next;
+				ConsoleInterfaceOutputList(list);
+				system("pause");
 				break;
 			case 2:
-				index = FindIndexInList(now);
+				index = ConsoleInterfaceFindByValue(list);
 				if (index == -1)
-					cout << red << "\n\tПодходящий элемент не найден в списке.\n" << normal;
+					cout << redColor << "\n\tПодходящий элемент не найден в списке.\n" << supremeColor;
 				else
-					cout << "Элемент найден в списке. Его индекс: " << red << index << normal << endl;
+					cout << "Элемент найден в списке. Его индекс: " << redColor << index << supremeColor << endl;
 				system("pause");
 				break;
 			case 3:
-				list = push(list);
+				list = ConsoleInterfaceInsertToEnd(list);
 				break;
 			case 4:
-				list = deleteByIndex(list);
+				list = ConsoleInterfaceDelete(list);
+				break;
 			case 5:
-				now = list->first->next;
+				Element* now = list->first->next;
 				for (int i = 0; i < list->last->index; i++) {
 					delete list->first;
 					list->first = now;
 					now = list->first->next;
 				}
 				now = NULL;
+				break;
 			}
 		}
 		else {					// список не задан
 			system("cls");
 			cout << "\tЧто вы хотите сделать?\n"
-			 << "1. Создать список\n"
-			 << "2. Выход из программы\n"
-			 << "> ";
-			variant = getVariant();
+				<< "1. Создать список\n"
+				<< "2. Выход из программы\n"
+				<< "> ";
+			variant = ConsoleInterfaceInput();
 			switch (variant)
 			{
 			case 1:
@@ -202,16 +246,17 @@ void MenuRealisation() {
 				cout << "\nВведите количество элементов списка\n> ";
 				cin >> n;
 				int* arr = new int[n];
-				cout << "\nВведите " << red << n << normal << " целочисленных чисел\n> ";
+				cout << "\nВведите " << redColor << n << supremeColor << " целочисленных чисел\n> ";
 				for (int i = 0; i < n; i++) cin >> arr[i];
-				list = RecordIntoList(arr, n, list);
+				list = CreateGList(arr, n, list);
 				break;
 			}
-			now = list->first;
 		}
-	} while (variant != 6 && now != NULL || variant != 2 && now == NULL);
+	} while (variant != 6 && list != NULL || variant != 2 && list == NULL);
 }
 
+
+
 int main() {
-	MenuRealisation();
+	ConsoleInterface();
 }
