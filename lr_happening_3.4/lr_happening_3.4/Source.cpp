@@ -71,9 +71,10 @@ int FindByValue(List* list, int value) {
 List* InsertToEnd(List* list, int data) {
 	Element* now = new Element;
 	now->data = data;
-	now->index = list->last->index + 1;
+	now->index = list->last->index+1;
 	list->last->next = now;
 	now->next = list->first;
+	list->last = now;
 	return list;
 }
 
