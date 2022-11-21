@@ -5,9 +5,16 @@
 using namespace std;
 
 
-struct Element { int data; int index; Element* next; };
+struct Element { 
+	int data; 
+	int index; 
+	Element* next;
+};
 
-struct List { Element* first; Element* last; };
+struct List { 
+	Element* first; 
+	Element* last; 
+};
 
 char red[] = "\x1b[31;1m";
 char normal[] = "\x1b[39;49m";
