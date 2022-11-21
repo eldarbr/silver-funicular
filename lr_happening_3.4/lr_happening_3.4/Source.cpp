@@ -4,6 +4,8 @@
 
 using namespace std;
 
+enum ConsoleInputBBB { Creating, Acting };
+
 // element
 struct Element {
 	int data;
@@ -24,6 +26,13 @@ char supremeColor[] = "\x1b[39;49m";	// white color for console interface
 // wr*te *nto l*st some sh*t sheeeeeeeeeeeeeeeesh
 // create good list
 List* CreateGList(int a[], int n, List* list) {
+	if (n < 1) {
+		cout << "wrong abobus number\n";
+		system("pause");
+		List* leNewBLiszt = new List;
+		leNewBLiszt->first = NULL;
+		return leNewBLiszt;
+	}
 	list->first = NULL;
 	list->last = NULL;
 	Element* now = NULL;
@@ -71,7 +80,7 @@ int FindByValue(List* list, int value) {
 List* InsertToEnd(List* list, int data) {
 	Element* now = new Element;
 	now->data = data;
-	now->index = list->last->index+1;
+	now->index = list->last->index + 1;
 	list->last->next = now;
 	now->next = list->first;
 	list->last = now;
@@ -81,7 +90,9 @@ List* InsertToEnd(List* list, int data) {
 // удаление элемента по индексу
 List* DeleteFromList(List* list, int index) {
 	Element* now = list->first;
-	
+
+	if (index > list->last->index || index < list->first->index) return list;
+
 	if (list->first == NULL) return list;
 	if (list->first == list->last && list->first->index == index) {
 		list->first = NULL;
@@ -123,15 +134,34 @@ List* DeleteFromList(List* list, int index) {
 	return list;
 }
 
+//удаляем листок
+List* DeleteWholeList(List* list) {
+	while (list->last != list->first) {
+		list->first = list->first->next;
+		delete list->last->next;
+		list->last->next = list->first;
+	}
+	delete list->first;
+	list = new List;
+	list->first = NULL;
+	return list;
+}
 
 // ввод для интерфейса пользователя
-int ConsoleInterfaceInput() {
+int ConsoleInterfaceInput(ConsoleInputBBB albhljafgh) {
 	int variant;
 	cin >> variant;
-
-	while (variant != 1 && variant != 2 && variant != 3 && variant != 4 && variant != 5 && variant != 6) {
-		cout << "Некорректное значение. Введите снова: ";
-		cin >> variant;
+	if (albhljafgh == Creating) {
+		while (variant != 1 && variant != 2) {
+			cout << "Некорректное значение. Введите снова: ";
+			cin >> variant;
+		}
+	}
+	else if (albhljafgh == Acting) {
+		while (variant != 1 && variant != 2 && variant != 3 && variant != 4 && variant != 5 && variant != 6) {
+			cout << "Некорректное значение. Введите снова: ";
+			cin >> variant;
+		}
 	}
 	return variant;
 }
@@ -193,8 +223,8 @@ void ConsoleInterface() {
 		if (list->first != NULL) {		// список задан
 			system("cls");
 			ConsoleInterfaceOutputList(list);
-				cout
-				<< "\tЧто вы хотите сделать?\n"
+			cout
+				<< "\nЧто вы хотите сделать?\n"
 				<< "1. Вывести весь список на экран\n"
 				<< "2. Найти в списке элемент с заданным значением\n"
 				<< "3. Вставить элемент в конец списка\n"
@@ -202,7 +232,7 @@ void ConsoleInterface() {
 				<< "5. Удалить список\n"
 				<< "6. Выход из программы\n"
 				<< "> ";
-			variant = ConsoleInterfaceInput();
+			variant = ConsoleInterfaceInput(Acting);
 			switch (variant) {
 			case 1:
 				ConsoleInterfaceOutputList(list);
@@ -223,13 +253,7 @@ void ConsoleInterface() {
 				list = ConsoleInterfaceDelete(list);
 				break;
 			case 5:
-				Element* now = list->first->next;
-				for (int i = 0; i < list->last->index; i++) {
-					delete list->first;
-					list->first = now;
-					now = list->first->next;
-				}
-				now = NULL;
+				list = DeleteWholeList(list);
 				break;
 			}
 		}
@@ -239,7 +263,7 @@ void ConsoleInterface() {
 				<< "1. Создать список\n"
 				<< "2. Выход из программы\n"
 				<< "> ";
-			variant = ConsoleInterfaceInput();
+			variant = ConsoleInterfaceInput(Creating);
 			switch (variant)
 			{
 			case 1:
@@ -253,7 +277,7 @@ void ConsoleInterface() {
 				break;
 			}
 		}
-	} while (variant != 6 && list != NULL || variant != 2 && list == NULL);
+	} while (variant != 6 && list->first != NULL || variant != 2 && list->first == NULL);
 }
 
 
