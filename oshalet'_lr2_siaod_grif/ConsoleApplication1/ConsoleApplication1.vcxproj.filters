@@ -23,5 +23,8 @@
     <Text Include="graph.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
+    <Text Include="graph2.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
   </ItemGroup>
 </Project>
